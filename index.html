@@ -33,9 +33,9 @@
       overflow-x: hidden;
     }
 
-    /* MHA Comic Wrapper Card */
+    /* Responsive MHA Comic Wrapper Card - Scales gracefully on Large Displays */
     .container {
-      max-width: 720px;
+      max-width: 980px;
       width: 100%;
       background: #111827;
       border-radius: 28px;
@@ -47,6 +47,7 @@
       overflow: hidden;
       text-align: center;
       position: relative;
+      margin: 10px auto;
     }
 
     /* =======================================================
@@ -605,13 +606,22 @@
     .eyecatch-overlay {
       display: none;
       position: fixed;
-      inset: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      height: 100dvh; /* Dynamic viewport height for mobile safari & chrome */
       background: #000;
       z-index: 200;
       justify-content: center;
       align-items: center;
       opacity: 0;
-      transition: opacity 0.25s ease-out;
+      transition: opacity 0.22s ease-out;
+      overflow: hidden;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
     }
 
     .eyecatch-overlay.active {
@@ -625,9 +635,14 @@
 
     .eyecatch-video,
     .eyecatch-img {
+      width: 100%;
+      height: 100%;
       width: 100vw;
-      height: 100vh;
+      height: 100dvh;
       object-fit: cover;
+      object-position: center center;
+      transform: translateZ(0); /* Hardware accelerate on iPhone and Android GPUs */
+      -webkit-transform: translateZ(0);
     }
 
     /* Page Intro Animation Overlay */
@@ -1521,10 +1536,10 @@
 
   <!-- Eyecatch Transition Container (Deku & Bakugo cinematic videos) -->
   <div class="eyecatch-overlay" id="eyecatchOverlay">
-    <video class="eyecatch-video" id="eyecatchDekuVideo" playsinline preload="auto" style="display: none;">
+    <video class="eyecatch-video" id="eyecatchDekuVideo" playsinline webkit-playsinline x5-playsinline muted preload="auto" style="display: none;">
       <source src="deku_eyecatch.mp4" type="video/mp4">
     </video>
-    <video class="eyecatch-video" id="eyecatchBakugoVideo" playsinline preload="auto" style="display: none;">
+    <video class="eyecatch-video" id="eyecatchBakugoVideo" playsinline webkit-playsinline x5-playsinline muted preload="auto" style="display: none;">
       <source src="bakugo_eyecatch.mp4" type="video/mp4">
     </video>
   </div>
