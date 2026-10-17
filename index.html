@@ -773,84 +773,77 @@
       border-color: #fff;
     }
 
-    /* Diagonal Slanted Character Katakana & English Name Plate */
-    .ua-diagonal-name-wrap {
-      position: absolute;
-      top: 28%;
-      right: -10px;
-      z-index: 10;
-      transform: rotate(-32deg);
+    /* Top Right Sleek English Hero Plate (Idea 1) */
+    .ua-english-hero-header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
       text-align: right;
-      pointer-events: none;
-      filter: drop-shadow(4px 4px 0px #000);
+      padding-right: 8px;
     }
 
-    .ua-kanji-sub {
-      font-family: 'Bangers', sans-serif;
-      font-size: 1.25rem;
-      letter-spacing: 4px;
-      color: #fff;
-      text-shadow: 2px 2px 0px #000;
-      opacity: 0.95;
-    }
-
-    .ua-diagonal-name {
-      font-family: 'Black Ops One', cursive;
-      font-size: 2.5rem;
+    .ua-english-name {
+      font-family: 'Black Ops One', sans-serif;
+      font-size: 2.1rem;
       letter-spacing: 2px;
       color: #fff;
-      line-height: 0.95;
-      text-transform: uppercase;
+      line-height: 1;
       text-shadow: 
         3px 3px 0px #000,
         -2px -2px 0px #000,
         2px -2px 0px #000,
         -2px 2px 0px #000;
+      text-transform: uppercase;
     }
 
-    /* Character Subtitle / Alias banner */
-    .ua-char-type-pill {
-      display: inline-block;
-      background: #000;
-      color: #fff;
-      font-size: 0.72rem;
-      font-weight: 900;
-      padding: 1px 8px;
-      border: 1.5px solid #fff;
-      letter-spacing: 1px;
-      margin-bottom: 2px;
+    .ua-english-alias-tag {
+      font-family: 'Bangers', cursive;
+      font-size: 1.05rem;
+      letter-spacing: 1.5px;
+      color: #facc15;
+      text-shadow: 2px 2px 0px #000;
+      margin-top: 2px;
     }
 
-    /* Middle Strip: Raid / Class Trait Ribbon */
+    /* Middle Strip: English Hero Trait Ribbon (Idea 1) */
     .ua-middle-strip {
       position: relative;
       z-index: 10;
       display: flex;
       align-items: center;
-      gap: 6px;
-      padding: 0 10px;
-      margin-bottom: 4px;
+      gap: 8px;
+      padding: 0 12px;
+      margin-bottom: 6px;
     }
 
     .ua-raid-banner {
       background: linear-gradient(90deg, #dc2626 0%, #b91c1c 100%);
       color: #fff;
       clip-path: polygon(0 0, 92% 0, 100% 100%, 0% 100%);
-      padding: 3px 18px 3px 10px;
+      padding: 4px 18px 4px 10px;
       font-family: 'Black Ops One', sans-serif;
-      font-size: 0.9rem;
-      letter-spacing: 1px;
+      font-size: 0.85rem;
+      letter-spacing: 1.5px;
       border-left: 3px solid #facc15;
       text-shadow: 1px 1px 0px #000;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .ua-raid-banner.deku-theme {
+      background: linear-gradient(90deg, #059669 0%, #047857 100%);
+      border-left-color: #38bdf8;
     }
 
     .ua-trait-text {
-      font-size: 0.75rem;
-      font-weight: 900;
-      color: #cbd5e1;
-      letter-spacing: 0.5px;
-      text-shadow: 1px 1px 0px #000;
+      font-family: 'Bangers', cursive;
+      font-size: 0.95rem;
+      color: #f3f4f6;
+      letter-spacing: 1px;
+      text-shadow: 2px 2px 0px #000;
       flex-grow: 1;
+      text-transform: uppercase;
     }
 
     /* Bottom Ability / Review Deck (Semi-transparent black overlay) */
@@ -1135,29 +1128,27 @@
           <img id="modalAvatar" src="" alt="Hero Portrait Artwork" />
         </div>
 
-        <!-- Top Layer: AP Cost Diamond, Action Badge & Close Button -->
+        <!-- Top Layer: AP Cost Diamond, Hero Name & Close Button (Idea 1 English TCG) -->
         <div class="ua-top-layer">
           <div class="ua-top-left">
             <div class="ua-cost-orb" id="cardCost">4</div>
             <div class="ua-action-badge">ACTION <span>1</span></div>
           </div>
+          <!-- Clean English Foil Nameplate on Top Right (No Japanese Overlapping Face) -->
+          <div class="ua-english-hero-header">
+            <div class="ua-english-name" id="cardEngName">IZUKU MIDORIYA</div>
+            <div class="ua-english-alias-tag" id="cardHeroAlias">"DEKU" &bull; U.A. CLASS 1-A</div>
+          </div>
           <button class="close-btn" onclick="closeHeroModal()" aria-label="Close">&times;</button>
         </div>
 
-        <!-- Slanted Hero Name Plate Across Art (Matches Bakugo card.jpg angle) -->
-        <div class="ua-diagonal-name-wrap">
-          <div class="ua-kanji-sub" id="cardKanji">爆豪 勝己</div>
-          <div class="ua-diagonal-name" id="cardEngName">KATSUKI<br>BAKUGO</div>
-        </div>
-
-        <!-- Spacer to push middle strip & bottom deck -->
+        <!-- Spacer to keep full-art character visible and breathing -->
         <div style="flex-grow: 1;"></div>
 
-        <!-- Middle Ribbon: Type & Raid Trigger Tag -->
+        <!-- Middle Ribbon: Hero Class & Trait Strip (Idea 1 English) -->
         <div class="ua-middle-strip">
-          <span class="ua-char-type-pill">キャラクター</span>
-          <div class="ua-raid-banner" id="cardRaidBanner">&#9670; RAID &lang;爆豪 勝己&rang;</div>
-          <div class="ua-trait-text" id="cardTraits">U.A. CLASS 1-A // PRO HERO</div>
+          <div class="ua-raid-banner" id="cardRaidBanner">&#9670; HERO CARD</div>
+          <div class="ua-trait-text" id="cardTraits">ONE FOR ALL // 9TH SUCCESSOR</div>
         </div>
 
         <!-- Bottom Ability Deck & Lilah Rose Greening's Review -->
@@ -1210,10 +1201,10 @@
       bakugo: {
         cost: "4",
         name: "Katsuki Bakugo",
-        engName: "KATSUKI<br>BAKUGO",
-        kanji: "爆豪 勝己",
-        raid: "&#9670; RAID &lang;爆豪 勝己&rang;",
-        traits: "U.A. CLASS 1-A // DYNAMIGHT",
+        engName: "KATSUKI BAKUGO",
+        aliasTag: "\"DYNAMIGHT\" &bull; U.A. CLASS 1-A",
+        raid: "&#9670; HERO CARD",
+        traits: "EXPLOSION // SYMBOL OF VICTORY",
         bp: "3500",
         heroName: "Dynamight (Kacchan)",
         quirk: "Explosion (Nitroglycerin palm sweat ignition)",
@@ -1222,7 +1213,7 @@
         daughterComment: "\"I think that Bakugo is Brave, Talented, Strong and Positive (sometimes)\"",
         accent: "#f97316",
         avatar: "bakugo_profile.png",
-        serial: "UA10BT/MHA-1-085 SR&#9733;&#9733; &bull; BAKUGO FOIL",
+        serial: "UA-EN-085 SR&#9733;&#9733; &bull; BAKUGO FOIL",
         glow: "rgba(249, 115, 22, 0.75)",
         theme: "bakugo-theme",
         orbClass: ""
@@ -1230,10 +1221,10 @@
       deku: {
         cost: "5",
         name: "Izuku Midoriya",
-        engName: "IZUKU<br>MIDORIYA",
-        kanji: "緑谷 出久",
-        raid: "&#9670; RAID &lang;緑谷 出久&rang;",
-        traits: "U.A. CLASS 1-A // ONE FOR ALL",
+        engName: "IZUKU MIDORIYA",
+        aliasTag: "\"DEKU\" &bull; U.A. CLASS 1-A",
+        raid: "&#9670; HERO CARD",
+        traits: "ONE FOR ALL // 9TH SUCCESSOR",
         bp: "4000",
         heroName: "Deku (9th Successor)",
         quirk: "One For All (Super strength + Gear-Shift)",
@@ -1242,7 +1233,7 @@
         daughterComment: "\"I think that Deku is Kind, Brave, Strong and Positive\"",
         accent: "#10b981",
         avatar: "deku_profile.jpg",
-        serial: "UA10BT/MHA-1-001 SEC&#9733;&#9733; &bull; PLUS ULTRA FOIL",
+        serial: "UA-EN-001 SEC&#9733;&#9733; &bull; PLUS ULTRA FOIL",
         glow: "rgba(16, 185, 129, 0.75)",
         theme: "deku-theme",
         orbClass: "deku-theme"
@@ -1355,8 +1346,8 @@
       if (!data) return;
 
       document.getElementById("cardCost").textContent = data.cost;
-      document.getElementById("cardKanji").innerHTML = data.kanji;
-      document.getElementById("cardEngName").innerHTML = data.engName;
+      document.getElementById("cardEngName").textContent = data.engName;
+      document.getElementById("cardHeroAlias").innerHTML = data.aliasTag;
       document.getElementById("cardRaidBanner").innerHTML = data.raid;
       document.getElementById("cardTraits").textContent = data.traits;
       document.getElementById("cardBpDisplay").innerHTML = `${data.bp} <span>BP</span>`;
@@ -1366,6 +1357,13 @@
       document.getElementById("statQuote").textContent = data.quote;
       document.getElementById("statDaughterComment").textContent = data.daughterComment;
       document.getElementById("cardSerial").innerHTML = data.serial;
+
+      const raidBanner = document.getElementById("cardRaidBanner");
+      if (heroKey === 'deku') {
+        raidBanner.classList.add("deku-theme");
+      } else {
+        raidBanner.classList.remove("deku-theme");
+      }
 
       const avatarImg = document.getElementById("modalAvatar");
       avatarImg.src = data.avatar;
