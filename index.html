@@ -431,7 +431,8 @@
       opacity: 0;
     }
 
-    .eyecatch-video {
+    .eyecatch-video,
+    .eyecatch-img {
       width: 100vw;
       height: 100vh;
       object-fit: cover;
@@ -500,13 +501,15 @@
       color: #000;
     }
 
-    /* Hero Collectible Trading Card Modal Styling */
+    /* ==========================================================================
+       Union Arena TCG Authentic Collectible Card (Matches Bakugo card.jpg)
+       ========================================================================== */
     .modal-backdrop {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.9);
-      backdrop-filter: blur(12px);
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(14px);
       z-index: 100;
       justify-content: center;
       align-items: center;
@@ -520,25 +523,27 @@
       opacity: 1;
     }
 
-    /* Outer Trading Card Container - Big & Non-scrolling */
+    /* Outer Trading Card Body - True TCG Proportions (~2.5:3.5) */
     .modal-content {
-      background: #0b0f19;
-      border-radius: 26px;
-      max-width: 540px;
+      background: #000;
+      border-radius: 20px;
+      max-width: 480px;
       width: 100%;
       height: 94vh;
-      max-height: 820px;
-      border: 5px solid #000;
+      max-height: 720px;
+      border: 4px solid #111;
       box-shadow: 
-        12px 12px 0px #000, 
-        0 0 45px rgba(245, 158, 11, 0.45),
-        0 30px 70px rgba(0,0,0,0.95);
+        0 0 0 2px #333,
+        10px 10px 0px #000, 
+        0 0 50px rgba(239, 68, 68, 0.6),
+        0 30px 80px rgba(0, 0, 0, 0.95);
       position: relative;
       animation: cardFlipIn 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       text-align: left;
       display: flex;
       flex-direction: column;
-      overflow: hidden; /* No scrollbar on the card */
+      overflow: hidden; /* Zero scroll */
+      box-sizing: border-box;
     }
 
     @keyframes cardFlipIn {
@@ -546,113 +551,145 @@
       100% { transform: scale(1) rotateY(0deg) translateY(0); opacity: 1; }
     }
 
-    /* Background Character Art Behind Everything */
+    /* Inner High-Tech Circuit Card Border */
+    .ua-card-frame {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      border-radius: 16px;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    /* Full-Art Background Artwork Behind Everything */
     .card-art-backdrop {
       position: absolute;
       inset: 0;
       z-index: 1;
       overflow: hidden;
-      background: #000;
+      background: #050811;
     }
 
     .card-art-backdrop img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 15%;
-      filter: brightness(0.85) contrast(1.1);
+      object-position: center 10%;
+      filter: contrast(1.15) brightness(0.92);
       display: block;
       transition: transform 0.6s ease;
     }
 
     .modal-content:hover .card-art-backdrop img {
-      transform: scale(1.03);
+      transform: scale(1.04);
     }
 
-    /* Card Darkening & Holographic Gradients */
+    /* Holographic Prismatic Sheen & Cyber Line Texture (as on Union Arena Card) */
     .card-art-backdrop::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        180deg,
-        rgba(0, 0, 0, 0.75) 0%,
-        rgba(0, 0, 0, 0.15) 30%,
-        rgba(0, 0, 0, 0.7) 60%,
-        rgba(8, 12, 20, 0.98) 88%,
-        rgba(5, 8, 15, 1) 100%
-      );
+      background: 
+        repeating-linear-gradient(
+          -45deg,
+          transparent,
+          transparent 5px,
+          rgba(255, 255, 255, 0.03) 5px,
+          rgba(255, 255, 255, 0.03) 10px
+        ),
+        linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0.45) 0%,
+          transparent 20%,
+          transparent 45%,
+          rgba(0, 0, 0, 0.75) 65%,
+          rgba(0, 0, 0, 0.98) 100%
+        );
       z-index: 2;
+      pointer-events: none;
     }
 
-    /* Holographic Prismatic Foil Sheen Overlay */
+    /* Prismatic Rainbow Holo Flare */
     .card-art-backdrop::after {
       content: '';
       position: absolute;
       inset: 0;
       background: linear-gradient(
-        125deg,
-        transparent 25%,
-        rgba(255, 255, 255, 0.12) 40%,
-        rgba(250, 204, 21, 0.15) 48%,
-        rgba(56, 189, 248, 0.15) 54%,
-        rgba(236, 72, 153, 0.12) 60%,
-        transparent 75%
+        115deg,
+        transparent 20%,
+        rgba(255, 255, 255, 0.12) 35%,
+        rgba(245, 158, 11, 0.18) 45%,
+        rgba(16, 185, 129, 0.18) 52%,
+        rgba(56, 189, 248, 0.18) 58%,
+        rgba(236, 72, 153, 0.15) 65%,
+        transparent 80%
       );
-      pointer-events: none;
       z-index: 3;
+      pointer-events: none;
     }
 
-    /* Trading Card Foreground Overlay Frame */
-    .card-inner-frame {
+    /* Top Card UI: Cost Diamond, Action Badge & Close Icon */
+    .ua-top-layer {
       position: relative;
       z-index: 10;
-      padding: 16px 18px 14px;
-      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 10px 12px;
+    }
+
+    .ua-top-left {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      box-sizing: border-box;
-      pointer-events: auto;
+      gap: 3px;
     }
 
-    /* Top Card Header Ribbon */
-    .card-top-bar {
+    /* AP Cost Hexagon / Diamond */
+    .ua-cost-orb {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+      border: 3px solid #ffedd5;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding-bottom: 6px;
+      justify-content: center;
+      font-family: 'Black Ops One', sans-serif;
+      font-size: 1.7rem;
+      color: #fff;
+      text-shadow: 2px 2px 0px #000;
+      box-shadow: 0 0 15px rgba(220, 38, 38, 0.8);
     }
 
-    .card-rarity-badge {
+    /* Action Pill */
+    .ua-action-badge {
+      background: #000;
+      border: 2px solid #fff;
+      border-radius: 999px;
+      padding: 1px 7px;
       font-family: 'Black Ops One', sans-serif;
-      font-size: 0.85rem;
-      letter-spacing: 2px;
-      color: #000;
-      background: linear-gradient(135deg, #facc15, #f59e0b);
-      padding: 4px 12px;
-      border-radius: 8px;
-      border: 2px solid #000;
-      box-shadow: 2px 2px 0px #000;
+      font-size: 0.7rem;
+      letter-spacing: 0.5px;
+      color: #fff;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      justify-content: center;
+      box-shadow: 1px 1px 0px #000;
+      width: fit-content;
     }
 
-    .card-class-badge {
-      font-family: 'Bangers', cursive;
-      font-size: 1.1rem;
-      letter-spacing: 1.5px;
-      color: #fff;
-      background: #1e3a8a;
-      padding: 4px 12px;
-      border-radius: 8px;
-      border: 2px solid #000;
-      box-shadow: 2px 2px 0px #000;
+    .ua-action-badge span {
+      color: #facc15;
+      margin-left: 3px;
+      font-size: 0.85rem;
     }
 
     .close-btn {
-      background: #000;
+      background: rgba(0, 0, 0, 0.8);
       border: 2px solid #facc15;
       color: #fff;
       font-size: 1.5rem;
@@ -665,7 +702,6 @@
       justify-content: center;
       font-weight: bold;
       transition: transform 0.2s ease, background 0.2s ease;
-      flex-shrink: 0;
       box-shadow: 2px 2px 0px rgba(0,0,0,0.8);
       z-index: 30;
     }
@@ -676,146 +712,250 @@
       border-color: #fff;
     }
 
-    /* Character Title & Hero Epithet Overlay */
-    .card-char-name-plate {
-      margin-top: auto;
-      margin-bottom: 10px;
-      text-shadow: 3px 3px 0px #000, -1px -1px 0px #000;
+    /* Diagonal Slanted Character Katakana & English Name Plate */
+    .ua-diagonal-name-wrap {
+      position: absolute;
+      top: 28%;
+      right: -10px;
+      z-index: 10;
+      transform: rotate(-32deg);
+      text-align: right;
+      pointer-events: none;
+      filter: drop-shadow(4px 4px 0px #000);
     }
 
-    .card-title {
-      font-family: 'Bangers', cursive;
-      font-size: 2.7rem;
-      letter-spacing: 2.5px;
+    .ua-kanji-sub {
+      font-family: 'Bangers', sans-serif;
+      font-size: 1.25rem;
+      letter-spacing: 4px;
       color: #fff;
+      text-shadow: 2px 2px 0px #000;
+      opacity: 0.95;
+    }
+
+    .ua-diagonal-name {
+      font-family: 'Black Ops One', cursive;
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+      color: #fff;
+      line-height: 0.95;
+      text-transform: uppercase;
+      text-shadow: 
+        3px 3px 0px #000,
+        -2px -2px 0px #000,
+        2px -2px 0px #000,
+        -2px 2px 0px #000;
+    }
+
+    /* Character Subtitle / Alias banner */
+    .ua-char-type-pill {
+      display: inline-block;
+      background: #000;
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 900;
+      padding: 1px 8px;
+      border: 1.5px solid #fff;
+      letter-spacing: 1px;
+      margin-bottom: 2px;
+    }
+
+    /* Middle Strip: Raid / Class Trait Ribbon */
+    .ua-middle-strip {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 10px;
+      margin-bottom: 4px;
+    }
+
+    .ua-raid-banner {
+      background: linear-gradient(90deg, #dc2626 0%, #b91c1c 100%);
+      color: #fff;
+      clip-path: polygon(0 0, 92% 0, 100% 100%, 0% 100%);
+      padding: 3px 18px 3px 10px;
+      font-family: 'Black Ops One', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      border-left: 3px solid #facc15;
+      text-shadow: 1px 1px 0px #000;
+    }
+
+    .ua-trait-text {
+      font-size: 0.75rem;
+      font-weight: 900;
+      color: #cbd5e1;
+      letter-spacing: 0.5px;
+      text-shadow: 1px 1px 0px #000;
+      flex-grow: 1;
+    }
+
+    /* Bottom Ability / Review Deck (Semi-transparent black overlay) */
+    .ua-bottom-deck {
+      position: relative;
+      z-index: 10;
+      background: rgba(10, 14, 22, 0.92);
+      backdrop-filter: blur(8px);
+      border-top: 2px solid rgba(255, 255, 255, 0.3);
+      padding: 8px 10px 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    /* Combat / Stats Row */
+    .ua-stat-row {
+      display: flex;
+      align-items: stretch;
+      gap: 5px;
+    }
+
+    .ua-stat-box {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.06);
+      border-left: 3px solid #f97316;
+      border-radius: 4px;
+      padding: 4px 6px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .ua-stat-box.deku-theme {
+      border-left-color: #10b981;
+    }
+
+    .ua-stat-lbl {
+      font-family: 'Bangers', cursive;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      color: #facc15;
+      text-transform: uppercase;
       line-height: 1;
       margin-bottom: 2px;
     }
 
-    .card-hero-alias {
-      font-size: 0.95rem;
+    .ua-stat-val {
+      font-size: 0.8rem;
       font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      color: #facc15;
-      text-shadow: 2px 2px 0px #000;
+      color: #f8fafc;
+      line-height: 1.25;
     }
 
-    /* Bottom Info Deck Overlay */
-    .card-bottom-deck {
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
+    /* Character Battle Ability Box (Text Card Effect) */
+    .ua-effect-box {
+      background: rgba(0, 0, 0, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 6px;
+      padding: 5px 8px;
     }
 
-    /* Card Details & Power Grid */
-    .card-stats-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 7px;
+    .ua-effect-badge {
+      display: inline-block;
+      background: #0284c7;
+      color: #fff;
+      font-family: 'Black Ops One', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.5px;
+      padding: 1px 6px;
+      border-radius: 3px;
+      margin-right: 4px;
+      vertical-align: middle;
     }
 
-    .card-stat-tile {
-      background: rgba(17, 24, 39, 0.88);
-      backdrop-filter: blur(8px);
-      border: 2px solid rgba(255, 255, 255, 0.25);
-      border-radius: 10px;
-      padding: 7px 11px;
-      box-shadow: 2px 2px 0px #000;
+    .ua-effect-badge.trigger {
+      background: #dc2626;
     }
 
-    .card-stat-tile.full-width {
-      grid-column: span 2;
-    }
-
-    .card-tile-label {
-      font-family: 'Bangers', cursive;
-      font-size: 0.95rem;
-      letter-spacing: 1px;
-      color: #facc15;
-      text-transform: uppercase;
-      margin-bottom: 2px;
-      text-shadow: 1px 1px 0px #000;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .card-tile-value {
-      font-size: 0.92rem;
-      font-weight: 800;
-      color: #f3f4f6;
-      line-height: 1.3;
-    }
-
-    /* Comic Quote Banner */
-    .card-quote-box {
-      background: rgba(11, 17, 32, 0.85);
-      backdrop-filter: blur(8px);
-      border-radius: 10px;
-      padding: 7px 12px;
-      font-style: italic;
-      color: #fef08a;
+    .ua-effect-text {
+      display: inline;
+      font-size: 0.8rem;
       font-weight: 700;
-      font-size: 0.88rem;
-      border: 2px dashed rgba(250, 204, 21, 0.7);
-      box-shadow: 2px 2px 0px #000;
-      text-align: center;
+      color: #e2e8f0;
+      line-height: 1.35;
+      font-style: italic;
     }
 
-    /* Lilah Rose Greening's Commentary Box */
-    .card-daughter-box {
-      background: linear-gradient(135deg, rgba(236, 72, 153, 0.28) 0%, rgba(147, 51, 234, 0.28) 100%);
-      backdrop-filter: blur(8px);
-      border: 2px solid #ec4899;
-      border-radius: 12px;
-      padding: 8px 12px;
-      box-shadow: 3px 3px 0px #000;
-      position: relative;
+    /* Lilah Rose Greening's Review Deck Banner (Raid Trigger Style) */
+    .ua-lilah-deck {
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.25) 0%, rgba(168, 85, 247, 0.25) 100%);
+      border: 1.5px solid #ec4899;
+      border-radius: 6px;
+      padding: 5px 8px;
+      box-shadow: inset 0 0 10px rgba(236, 72, 153, 0.2);
     }
 
-    .daughter-tag {
+    .ua-lilah-badge {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      font-family: 'Bangers', cursive;
-      font-size: 0.95rem;
-      letter-spacing: 1px;
-      color: #fff;
+      gap: 3px;
       background: linear-gradient(135deg, #ec4899, #d946ef);
-      padding: 2px 10px;
-      border-radius: 6px;
-      border: 1.5px solid #000;
-      box-shadow: 1.5px 1.5px 0px #000;
-      margin-bottom: 3px;
+      color: #fff;
+      font-family: 'Black Ops One', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.5px;
+      padding: 1px 7px;
+      border-radius: 4px;
+      margin-bottom: 2px;
       text-shadow: 1px 1px 0px #000;
     }
 
-    .daughter-comment {
-      font-size: 0.95rem;
+    .ua-lilah-text {
+      font-size: 0.85rem;
       font-weight: 800;
       color: #fff;
-      line-height: 1.35;
+      line-height: 1.3;
       text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
     }
 
-    /* Card Bottom Trademark Bar */
-    .card-bottom-footer {
+    /* Bottom Card Status Bar: BP, Trigger, Collector Serial */
+    .ua-footer-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-top: 5px;
-      border-top: 1px solid rgba(255, 255, 255, 0.2);
-      font-size: 0.72rem;
-      color: #cbd5e1;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      text-shadow: 1px 1px 0px #000;
+      padding-top: 4px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
     }
 
-    .card-serial {
-      font-family: monospace;
+    .ua-bp-display {
+      font-family: 'Black Ops One', sans-serif;
+      font-size: 1.7rem;
+      letter-spacing: 1px;
+      color: #fff;
+      line-height: 1;
+      text-shadow: 2px 2px 0px #000;
+      display: flex;
+      align-items: baseline;
+      gap: 3px;
+    }
+
+    .ua-bp-display span {
+      font-size: 0.85rem;
       color: #facc15;
+    }
+
+    .ua-collector-serial {
+      font-family: monospace;
+      font-size: 0.68rem;
+      font-weight: bold;
+      color: #94a3b8;
+      letter-spacing: 0.5px;
+    }
+
+    .ua-orb-energy {
+      width: 22px;
+      height: 22px;
+      background: radial-gradient(circle at 35% 35%, #f87171 0%, #b91c1c 70%, #450a0a 100%);
+      border: 2px solid #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(239, 68, 68, 0.9);
+    }
+
+    .ua-orb-energy.deku-theme {
+      background: radial-gradient(circle at 35% 35%, #34d399 0%, #059669 70%, #022c22 100%);
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.9);
     }
 
     .footer {
@@ -843,19 +983,21 @@
   <!-- Page Opening Animation Intro Overlay -->
   <div class="intro-overlay" id="introOverlay" onclick="dismissIntroAnimation()">
     <div class="intro-container">
-      <picture>
-        <source srcset="bakugo_deku_intro.webp" type="image/webp">
-        <img src="bakugo_deku_intro.gif" alt="Bakugo and Deku Animation" class="intro-anim-media" id="introAnimImg" />
-      </picture>
+      <video class="intro-anim-media" id="introAnimVideo" autoplay muted playsinline preload="auto">
+        <source src="bakugo_deku_intro.mp4" type="video/mp4">
+        <!-- Fallback image if video is not supported -->
+        <img src="bakugo_deku_intro.gif" alt="Bakugo and Deku Animation" class="intro-anim-media" />
+      </video>
       <button class="intro-skip-btn" onclick="event.stopPropagation(); dismissIntroAnimation();" aria-label="Skip Animation">SKIP &rarr;</button>
     </div>
   </div>
 
-  <!-- Eyecatch Video Transition Container -->
+  <!-- Eyecatch Transition Container (Deku video & Bakugo animated GIF) -->
   <div class="eyecatch-overlay" id="eyecatchOverlay">
-    <video class="eyecatch-video" id="eyecatchVideo" playsinline preload="auto">
+    <video class="eyecatch-video" id="eyecatchVideo" playsinline preload="auto" style="display: none;">
       <source src="deku_eyecatch.mp4" type="video/mp4">
     </video>
+    <img class="eyecatch-img" id="eyecatchBakugoImg" alt="Bakugo Eyecatch" style="display: none;" />
   </div>
 
   <div class="container">
@@ -925,66 +1067,79 @@
     </div>
   </div>
 
-  <!-- Hero Collectible Trading Card Modal (Full-Art Background Style) -->
+  <!-- Authentic Union Arena TCG Collectible Card Modal -->
   <div class="modal-backdrop" id="heroModal" onclick="handleBackdropClick(event)">
     <div class="modal-content" id="modalContent">
-      <!-- Full-Art Character Background Behind Everything -->
-      <div class="card-art-backdrop">
-        <img id="modalAvatar" src="" alt="Hero Portrait Artwork" />
-      </div>
+      <div class="ua-card-frame">
+        <!-- Full-Art Character Background Behind Everything -->
+        <div class="card-art-backdrop">
+          <img id="modalAvatar" src="" alt="Hero Portrait Artwork" />
+        </div>
 
-      <!-- Foreground Card Interface Overlay -->
-      <div class="card-inner-frame">
-        <!-- Top Trading Card Header Ribbon -->
-        <div class="card-top-bar">
-          <div class="card-rarity-badge" id="cardRarity">&#9733;&#9733;&#9733; ULTRA RARE [UR]</div>
-          <div class="card-class-badge" id="cardClass">U.A. CLASS 1-A</div>
+        <!-- Top Layer: AP Cost Diamond, Action Badge & Close Button -->
+        <div class="ua-top-layer">
+          <div class="ua-top-left">
+            <div class="ua-cost-orb" id="cardCost">4</div>
+            <div class="ua-action-badge">ACTION <span>1</span></div>
+          </div>
           <button class="close-btn" onclick="closeHeroModal()" aria-label="Close">&times;</button>
         </div>
 
-        <!-- Nameplate & Hero Title Overlaid Over Background Art -->
-        <div class="card-char-name-plate">
-          <div class="card-title" id="modalName">Hero Name</div>
-          <div class="card-hero-alias" id="modalAlias">Hero Alias</div>
+        <!-- Slanted Hero Name Plate Across Art (Matches Bakugo card.jpg angle) -->
+        <div class="ua-diagonal-name-wrap">
+          <div class="ua-kanji-sub" id="cardKanji">爆豪 勝己</div>
+          <div class="ua-diagonal-name" id="cardEngName">KATSUKI<br>BAKUGO</div>
         </div>
 
-        <!-- Bottom Stats & Reviews Overlay Deck -->
-        <div class="card-bottom-deck">
-          <!-- Trading Card Info & Stat Grid -->
-          <div class="card-stats-grid">
-            <div class="card-stat-tile">
-              <div class="card-tile-label">&#9876; Hero Code:</div>
-              <div class="card-tile-value" id="statHeroName">Hero</div>
+        <!-- Spacer to push middle strip & bottom deck -->
+        <div style="flex-grow: 1;"></div>
+
+        <!-- Middle Ribbon: Type & Raid Trigger Tag -->
+        <div class="ua-middle-strip">
+          <span class="ua-char-type-pill">キャラクター</span>
+          <div class="ua-raid-banner" id="cardRaidBanner">&#9670; RAID &lang;爆豪 勝己&rang;</div>
+          <div class="ua-trait-text" id="cardTraits">U.A. CLASS 1-A // PRO HERO</div>
+        </div>
+
+        <!-- Bottom Ability Deck & Lilah Rose Greening's Review -->
+        <div class="ua-bottom-deck">
+          <!-- Combat & Quirk Attributes Row -->
+          <div class="ua-stat-row">
+            <div class="ua-stat-box" id="statHeroCodeBox">
+              <div class="ua-stat-lbl">&#9876; Hero Code:</div>
+              <div class="ua-stat-val" id="statHeroName">Hero</div>
             </div>
-            <div class="card-stat-tile">
-              <div class="card-tile-label">&#128197; Age:</div>
-              <div class="card-tile-value" id="statAge">16</div>
+            <div class="ua-stat-box" id="statQuirkBox" style="flex: 1.5;">
+              <div class="ua-stat-lbl">&#9889; Quirk Ability:</div>
+              <div class="ua-stat-val" id="statQuirk">Quirk</div>
             </div>
-            <div class="card-stat-tile full-width">
-              <div class="card-tile-label">&#9889; Quirk Ability:</div>
-              <div class="card-tile-value" id="statQuirk">Quirk Description</div>
-            </div>
-            <div class="card-stat-tile full-width">
-              <div class="card-tile-label">&#127858; Favorite Dish:</div>
-              <div class="card-tile-value" id="statFood">Food</div>
+            <div class="ua-stat-box" id="statFavFoodBox">
+              <div class="ua-stat-lbl">&#127858; Favorite Dish:</div>
+              <div class="ua-stat-val" id="statFood">Food</div>
             </div>
           </div>
 
-          <!-- Hero Battle Quote Banner -->
-          <div class="card-quote-box" id="statQuote">
-            "Hero Quote"
+          <!-- Hero Quote Card Effect Box -->
+          <div class="ua-effect-box">
+            <span class="ua-effect-badge">BATTLE EFFECT</span>
+            <span class="ua-effect-text" id="statQuote">"Hero Quote"</span>
           </div>
 
-          <!-- Lilah Rose Greening's Commentary Box -->
-          <div class="card-daughter-box">
-            <div class="daughter-tag">&#10024; Lilah Rose Greening's Review</div>
-            <div class="daughter-comment" id="statDaughterComment">Commentary</div>
+          <!-- Lilah Rose Greening's Review Deck (Raid Trigger Ribbon Style) -->
+          <div class="ua-lilah-deck">
+            <div class="ua-lilah-badge">&#10024; LILAH ROSE GREENING'S REVIEW</div>
+            <div class="ua-lilah-text" id="statDaughterComment">"Commentary"</div>
           </div>
 
-          <!-- Card Footer / Collectors Stamp -->
-          <div class="card-bottom-footer">
-            <span id="cardCollector">CARD #01/100 &bull; 1ST EDITION</span>
-            <span class="card-serial" id="cardSerial">UA-MHA-2026</span>
+          <!-- Card Bottom Bar: Battle Points (BP), Trigger Orb & Card Serial -->
+          <div class="ua-footer-bar">
+            <div class="ua-bp-display" id="cardBpDisplay">
+              3500 <span>BP</span>
+            </div>
+            <div class="ua-collector-serial" id="cardSerial">
+              UA10BT/MHA-1-085 SR&#9733;&#9733;
+            </div>
+            <div class="ua-orb-energy" id="cardEnergyOrb"></div>
           </div>
         </div>
       </div>
@@ -994,36 +1149,44 @@
   <script>
     const heroData = {
       bakugo: {
+        cost: "4",
         name: "Katsuki Bakugo",
-        alias: "Great Explosion Murder God Dynamight",
+        engName: "KATSUKI<br>BAKUGO",
+        kanji: "爆豪 勝己",
+        raid: "&#9670; RAID &lang;爆豪 勝己&rang;",
+        traits: "U.A. CLASS 1-A // DYNAMIGHT",
+        bp: "3500",
         heroName: "Dynamight (Kacchan)",
-        age: "16 years old",
-        quirk: "Explosion (Nitroglycerin sweat ignition)",
+        quirk: "Explosion (Nitroglycerin palm sweat ignition)",
         food: "Spicy Mapo Tofu & Mountain Gear Food",
         quote: "\"I'm gonna be the number one hero, and I'll surpass All Might!\"",
         daughterComment: "\"I think that Bakugo is Brave, Talented, Strong and Positive (sometimes)\"",
         accent: "#f97316",
         avatar: "bakugo_profile.png",
-        rarity: "&#9733;&#9733;&#9733; ULTRA RARE [UR]",
-        serial: "UA-MHA-002-EXPLODE",
-        collector: "CARD #02/100 &bull; DYNAMIGHT FOIL",
-        glow: "rgba(249, 115, 22, 0.65)"
+        serial: "UA10BT/MHA-1-085 SR&#9733;&#9733; &bull; BAKUGO FOIL",
+        glow: "rgba(249, 115, 22, 0.75)",
+        theme: "bakugo-theme",
+        orbClass: ""
       },
       deku: {
+        cost: "5",
         name: "Izuku Midoriya",
-        alias: "9th Successor of One For All",
-        heroName: "Deku",
-        age: "16 years old",
-        quirk: "One For All (Super strength + Gear-Shift quirks)",
+        engName: "IZUKU<br>MIDORIYA",
+        kanji: "緑谷 出久",
+        raid: "&#9670; RAID &lang;緑谷 出久&rang;",
+        traits: "U.A. CLASS 1-A // ONE FOR ALL",
+        bp: "4000",
+        heroName: "Deku (9th Successor)",
+        quirk: "One For All (Super strength + Gear-Shift)",
         food: "Katsudon (Pork Cutlet Rice Bowl)",
         quote: "\"A hero is someone who smashes through every obstacle and never gives up!\"",
         daughterComment: "\"I think that Deku is Kind, Brave, Strong and Positive\"",
         accent: "#10b981",
         avatar: "deku_profile.jpg",
-        rarity: "&#9733;&#9733;&#9733; SECRET RARE [SR]",
-        serial: "UA-MHA-001-SMASH",
-        collector: "CARD #01/100 &bull; PLUS ULTRA FOIL",
-        glow: "rgba(16, 185, 129, 0.65)"
+        serial: "UA10BT/MHA-1-001 SEC&#9733;&#9733; &bull; PLUS ULTRA FOIL",
+        glow: "rgba(16, 185, 129, 0.75)",
+        theme: "deku-theme",
+        orbClass: "deku-theme"
       }
     };
 
@@ -1085,24 +1248,41 @@
       const data = heroData[heroKey];
       if (!data) return;
 
-      document.getElementById("modalName").textContent = data.name;
-      document.getElementById("modalAlias").textContent = data.alias;
+      document.getElementById("cardCost").textContent = data.cost;
+      document.getElementById("cardKanji").innerHTML = data.kanji;
+      document.getElementById("cardEngName").innerHTML = data.engName;
+      document.getElementById("cardRaidBanner").innerHTML = data.raid;
+      document.getElementById("cardTraits").textContent = data.traits;
+      document.getElementById("cardBpDisplay").innerHTML = `${data.bp} <span>BP</span>`;
       document.getElementById("statHeroName").textContent = data.heroName;
-      document.getElementById("statAge").textContent = data.age;
       document.getElementById("statQuirk").textContent = data.quirk;
       document.getElementById("statFood").textContent = data.food;
       document.getElementById("statQuote").textContent = data.quote;
       document.getElementById("statDaughterComment").textContent = data.daughterComment;
-      document.getElementById("cardRarity").innerHTML = data.rarity;
-      document.getElementById("cardSerial").textContent = data.serial;
-      document.getElementById("cardCollector").innerHTML = data.collector;
+      document.getElementById("cardSerial").innerHTML = data.serial;
 
       const avatarImg = document.getElementById("modalAvatar");
       avatarImg.src = data.avatar;
       avatarImg.alt = data.name;
 
+      const energyOrb = document.getElementById("cardEnergyOrb");
+      energyOrb.className = "ua-orb-energy " + data.orbClass;
+
+      const heroBox = document.getElementById("statHeroCodeBox");
+      const quirkBox = document.getElementById("statQuirkBox");
+      const foodBox = document.getElementById("statFavFoodBox");
+      if (heroKey === 'deku') {
+        heroBox.classList.add("deku-theme");
+        quirkBox.classList.add("deku-theme");
+        foodBox.classList.add("deku-theme");
+      } else {
+        heroBox.classList.remove("deku-theme");
+        quirkBox.classList.remove("deku-theme");
+        foodBox.classList.remove("deku-theme");
+      }
+
       const modalContent = document.getElementById("modalContent");
-      modalContent.style.boxShadow = `12px 12px 0px #000, 0 0 45px ${data.glow}, 0 30px 70px rgba(0,0,0,0.95)`;
+      modalContent.style.boxShadow = `0 0 0 2px #333, 10px 10px 0px #000, 0 0 50px ${data.glow}, 0 30px 80px rgba(0,0,0,0.95)`;
       modalContent.style.borderColor = data.accent;
 
       const modal = document.getElementById("heroModal");
@@ -1125,6 +1305,10 @@
       if (introDismissed) return;
       introDismissed = true;
       const intro = document.getElementById("introOverlay");
+      const introVid = document.getElementById("introAnimVideo");
+      if (introVid) {
+        try { introVid.pause(); } catch(e) {}
+      }
       if (intro) {
         intro.classList.add("fade-out");
         setTimeout(() => {
@@ -1133,11 +1317,24 @@
       }
     }
 
-    // Auto-dismiss after animation plays (~4.2 seconds for full 40-frame sequence)
+    // Play video immediately upon page open and hook ended event
     window.addEventListener("DOMContentLoaded", () => {
+      const introVid = document.getElementById("introAnimVideo");
+      if (introVid) {
+        const playPromise = introVid.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            // Autoplay blocked: fallback to showing intro image and timer
+          });
+        }
+        introVid.onended = () => {
+          dismissIntroAnimation();
+        };
+      }
+      // Safety auto-dismiss fallback after 4.5 seconds
       setTimeout(() => {
         dismissIntroAnimation();
-      }, 4200);
+      }, 4500);
     });
 
     document.addEventListener("keydown", function(e) {
