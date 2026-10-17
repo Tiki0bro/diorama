@@ -658,6 +658,50 @@
       font-style: italic;
     }
 
+    /* Scroll Down to Battle Prompt Bar */
+    .battle-scroll-indicator {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: -6px 20px 14px 20px;
+    }
+
+    .battle-scroll-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 2px solid #f59e0b;
+      color: #facc15;
+      font-family: 'Black Ops One', sans-serif;
+      font-size: 0.82rem;
+      letter-spacing: 1.5px;
+      padding: 6px 20px;
+      border-radius: 999px;
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.25), 3px 3px 0px #000;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .battle-scroll-pill:hover {
+      transform: translateY(2px);
+      background: #f59e0b;
+      color: #000;
+    }
+
+    .battle-scroll-pill .scroll-arrow {
+      animation: bounceArrow 1.4s ease-in-out infinite;
+      display: inline-block;
+      font-size: 1rem;
+    }
+
+    @keyframes bounceArrow {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(4px); }
+    }
+
     /* Eyecatch Video Transition Overlay */
     /* Eyecatch Video Transition Overlay */
     .eyecatch-overlay {
@@ -1967,7 +2011,42 @@
       </div>
     </div>
 
-    <div class="arena-section">
+    <!-- Story & Lilah Review Dossier (Placed Above Main Clash for Natural Story-First Reading) -->
+    <div class="story-card" id="storyCard">
+      <div class="story-header-row">
+        <div class="story-title">&#9733; The Story of Two Heroes</div>
+        <div class="story-file-id">UA-ARCHIVE // CL-1A</div>
+      </div>
+      <p class="story-text">
+        These young men named <span class="highlight-hero-deku">Deku</span> and <span class="highlight-hero-baku">Bakugo</span> have been rivals for over 11 years. After enrolling at UA High School together, they grew through fierce battles, forged an unbreakable bond, and ultimately <span class="highlight-saved">SAVED</span> the world.
+      </p>
+
+      <!-- Lilah Rose Greening's Commentary Highlight Box -->
+      <div class="daughter-hero-reviews">
+        <div class="daughter-main-badge">&#10024; Lilah Rose Greening's Review</div>
+        <div class="daughter-review-grid">
+          <div class="daughter-hero-card deku-card">
+            <div class="daughter-hero-header">&#9889; Deku</div>
+            <div class="daughter-hero-quote">"I think that Deku is Kind, Brave, Strong and Positive"</div>
+          </div>
+          <div class="daughter-hero-card baku-card">
+            <div class="daughter-hero-header">&#128165; Bakugo</div>
+            <div class="daughter-hero-quote">"I think that Bakugo is Brave, Talented, Strong and Positive (sometimes)"</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll Down to Battle Arena Prompt -->
+    <div class="battle-scroll-indicator">
+      <button class="battle-scroll-pill" onclick="document.getElementById('arenaSection').scrollIntoView({behavior: 'smooth', block: 'center'});" aria-label="Scroll to the battle clash">
+        <span>Enter The Battle Clash</span>
+        <span class="scroll-arrow">&#9660;</span>
+      </button>
+    </div>
+
+    <!-- Interactive Battle Arena Section (Bakugo vs Deku) -->
+    <div class="arena-section" id="arenaSection">
       <div class="arena-frame" id="arenaFrame">
         <!-- Base High-Res Static Canvas -->
         <img src="deku_bakugo.jpg" alt="Bakugo vs Deku" class="base-img" />
@@ -2003,31 +2082,6 @@
           <div class="hero-btn btn-deku">
             <div class="hero-btn-main">&#9889; DEKU</div>
             <div class="hero-btn-hint">&#128070; TAP TO BATTLE</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="story-card" id="storyCard">
-      <div class="story-header-row">
-        <div class="story-title">&#9733; The Story of Two Heroes</div>
-        <div class="story-file-id">UA-ARCHIVE // CL-1A</div>
-      </div>
-      <p class="story-text">
-        These young men named <span class="highlight-hero-deku">Deku</span> and <span class="highlight-hero-baku">Bakugo</span> have been rivals for over 11 years. After enrolling at UA High School together, they grew through fierce battles, forged an unbreakable bond, and ultimately <span class="highlight-saved">SAVED</span> the world.
-      </p>
-
-      <!-- Lilah Rose Greening's Commentary Highlight Box -->
-      <div class="daughter-hero-reviews">
-        <div class="daughter-main-badge">&#10024; Lilah Rose Greening's Review</div>
-        <div class="daughter-review-grid">
-          <div class="daughter-hero-card deku-card">
-            <div class="daughter-hero-header">&#9889; Deku</div>
-            <div class="daughter-hero-quote">"I think that Deku is Kind, Brave, Strong and Positive"</div>
-          </div>
-          <div class="daughter-hero-card baku-card">
-            <div class="daughter-hero-header">&#128165; Bakugo</div>
-            <div class="daughter-hero-quote">"I think that Bakugo is Brave, Talented, Strong and Positive (sometimes)"</div>
           </div>
         </div>
       </div>
