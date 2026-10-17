@@ -1988,6 +1988,18 @@
           dismissIntroAnimation();
         });
       }
+
+      // Pre-warm eyecatch videos on first user touch/click for zero-latency mobile playback
+      const warmVideos = () => {
+        const dVid = document.getElementById("eyecatchDekuVideo");
+        const bVid = document.getElementById("eyecatchBakugoVideo");
+        if (dVid) { dVid.load(); }
+        if (bVid) { bVid.load(); }
+        window.removeEventListener("touchstart", warmVideos);
+        window.removeEventListener("click", warmVideos);
+      };
+      window.addEventListener("touchstart", warmVideos, { passive: true });
+      window.addEventListener("click", warmVideos, { passive: true });
     });
 
     document.addEventListener("keydown", function(e) {
