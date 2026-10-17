@@ -1342,23 +1342,37 @@
         font-size: 0.92rem;
       }
 
-      /* Cellphone Friendly Card Modal */
+      /* Cellphone Friendly Card Modal - Proper Collectible Card Dimensions */
       .modal-backdrop {
-        padding: 8px 6px;
+        padding: 12px 10px;
+        align-items: center;
       }
 
       .modal-content {
-        max-width: 100%;
+        max-width: 360px;
+        width: 100%;
         height: auto;
-        min-height: 85vh;
-        max-height: 96vh;
-        border-radius: 16px;
+        min-height: unset;
+        max-height: 90vh;
+        aspect-ratio: 2.5 / 3.7;
+        border-radius: 18px;
         border-width: 3px;
-        box-shadow: 0 0 0 1px #333, 6px 6px 0px #000, 0 15px 40px rgba(0,0,0,0.9);
+        box-shadow: 0 0 0 1px #333, 6px 6px 0px #000, 0 20px 45px rgba(0,0,0,0.9);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
       }
 
       .ua-card-frame {
-        border-radius: 12px;
+        border-radius: 14px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .card-art-backdrop img {
+        object-position: center 20%;
       }
 
       .ua-top-layer {
@@ -1366,51 +1380,56 @@
       }
 
       .ua-cost-orb {
-        width: 36px;
-        height: 36px;
-        font-size: 1.35rem;
+        width: 34px;
+        height: 34px;
+        font-size: 1.25rem;
         border-width: 2px;
       }
 
       .ua-action-badge {
-        font-size: 0.62rem;
-        padding: 1px 5px;
+        font-size: 0.58rem;
+        padding: 1px 4px;
+      }
+
+      .ua-english-hero-header {
+        padding-right: 4px;
       }
 
       .ua-english-name {
-        font-size: 1.55rem;
+        font-size: 1.35rem;
         letter-spacing: 1px;
       }
 
       .ua-english-alias-tag {
-        font-size: 0.85rem;
-        letter-spacing: 0.5px;
-      }
-
-      .close-btn {
-        width: 32px;
-        height: 32px;
-        font-size: 1.3rem;
-      }
-
-      .ua-middle-strip {
-        padding: 0 8px;
-        margin-bottom: 4px;
-      }
-
-      .ua-raid-banner {
-        font-size: 0.72rem;
-        padding: 2px 12px 2px 8px;
-        letter-spacing: 1px;
-      }
-
-      .ua-trait-text {
         font-size: 0.78rem;
         letter-spacing: 0.5px;
       }
 
+      .close-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 1.2rem;
+      }
+
+      .ua-middle-strip {
+        padding: 0 10px;
+        margin-bottom: 4px;
+        gap: 6px;
+      }
+
+      .ua-raid-banner {
+        font-size: 0.68rem;
+        padding: 2px 10px 2px 6px;
+        letter-spacing: 1px;
+      }
+
+      .ua-trait-text {
+        font-size: 0.72rem;
+        letter-spacing: 0.5px;
+      }
+
       .ua-bottom-deck {
-        padding: 6px 8px 5px;
+        padding: 6px 8px 6px;
         gap: 4px;
       }
 
@@ -1419,30 +1438,30 @@
       }
 
       .ua-stat-box {
-        padding: 3px 5px;
+        padding: 2px 4px;
       }
 
       .ua-stat-lbl {
-        font-size: 0.68rem;
+        font-size: 0.62rem;
       }
 
       .ua-stat-val {
-        font-size: 0.72rem;
+        font-size: 0.68rem;
         line-height: 1.15;
       }
 
       .ua-effect-box {
-        padding: 4px 6px;
+        padding: 3px 6px;
       }
 
       .ua-effect-badge {
-        font-size: 0.6rem;
+        font-size: 0.58rem;
         padding: 1px 4px;
       }
 
       .ua-effect-text {
-        font-size: 0.72rem;
-        line-height: 1.25;
+        font-size: 0.68rem;
+        line-height: 1.2;
       }
 
       .ua-lilah-deck {
@@ -1450,30 +1469,34 @@
       }
 
       .ua-lilah-badge {
-        font-size: 0.62rem;
+        font-size: 0.6rem;
         padding: 1px 5px;
       }
 
       .ua-lilah-text {
-        font-size: 0.75rem;
+        font-size: 0.72rem;
         line-height: 1.25;
       }
 
+      .ua-footer-bar {
+        padding-top: 3px;
+      }
+
       .ua-bp-display {
-        font-size: 1.35rem;
+        font-size: 1.25rem;
       }
 
       .ua-bp-display span {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
       }
 
       .ua-collector-serial {
-        font-size: 0.58rem;
+        font-size: 0.55rem;
       }
 
       .ua-orb-energy {
-        width: 18px;
-        height: 18px;
+        width: 16px;
+        height: 16px;
       }
 
       .intro-skip-btn {
