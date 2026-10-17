@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deku & Bakugo - Diorama Story</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at 20% 20%, #1e3c2f 0%, #0d131a 60%, #1a0f08 100%);
+      font-family: 'Nunito', sans-serif;
+      color: #f3f4f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px 16px;
+    }
+
+    .container {
+      max-width: 640px;
+      width: 100%;
+      background: rgba(18, 24, 33, 0.92);
+      border-radius: 24px;
+      border: 3px solid #ff7b00;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(255, 123, 0, 0.25);
+      overflow: hidden;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .header {
+      background: linear-gradient(135deg, #10b981 0%, #f97316 100%);
+      padding: 20px 16px;
+      position: relative;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #111827;
+      color: #facc15;
+      font-family: 'Bangers', cursive;
+      font-size: 1.1rem;
+      letter-spacing: 1.5px;
+      padding: 4px 14px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    h1 {
+      font-family: 'Bangers', cursive;
+      font-size: 2.6rem;
+      letter-spacing: 2px;
+      color: #ffffff;
+      text-shadow: 3px 3px 0px #000;
+      line-height: 1.1;
+    }
+
+    .image-wrapper {
+      padding: 20px 20px 10px 20px;
+    }
+
+    .image-frame {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 4px solid #facc15;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+      background: #000;
+      line-height: 0;
+    }
+
+    .image-frame img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .story-card {
+      margin: 16px 20px 24px 20px;
+      background: #1f2937;
+      border-radius: 16px;
+      padding: 22px 20px;
+      border-left: 6px solid #10b981;
+      border-right: 6px solid #f97316;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.4);
+    }
+
+    .story-title {
+      font-family: 'Bangers', cursive;
+      font-size: 1.5rem;
+      color: #38bdf8;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      text-shadow: 1px 1px 0px #000;
+    }
+
+    .story-text {
+      font-size: 1.15rem;
+      line-height: 1.7;
+      color: #f9fafb;
+      font-weight: 700;
+    }
+
+    .story-text span.highlight-hero {
+      color: #34d399;
+      text-decoration: underline;
+    }
+
+    .story-text span.highlight-saved {
+      color: #facc15;
+      font-size: 1.25rem;
+      letter-spacing: 1px;
+      text-shadow: 0 0 8px rgba(250, 204, 21, 0.6);
+    }
+
+    .footer {
+      padding: 12px 16px 20px;
+      font-size: 0.9rem;
+      color: #9ca3af;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .sparkle {
+      color: #facc15;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="badge">Diorama Exhibition</div>
+      <h1>Deku &amp; Bakugo</h1>
+    </div>
+
+    <div class="image-wrapper">
+      <div class="image-frame">
+        <img src="deku_bakugo.jpg" alt="Deku fighting Bakugo" />
+      </div>
+    </div>
+
+    <div class="story-card">
+      <div class="story-title">&#9733; The Journey of Two Heroes &#9733;</div>
+      <p class="story-text">
+        These young men named <span class="highlight-hero">Deku</span> and <span class="highlight-hero">Bakugo</span> have been enemies for over 11 years. After enrolling at UA High School together, they grew more and more comfortable with each other, and eventually they grew so close and <span class="highlight-saved">SAVED</span> the world.
+      </p>
+    </div>
+
+    <div class="footer">
+      <span class="sparkle">&#10024;</span> Created with passion for the school diorama showcase <span class="sparkle">&#10024;</span>
+    </div>
+  </div>
+</body>
+</html>
