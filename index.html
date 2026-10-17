@@ -538,7 +538,7 @@
         0 0 50px rgba(239, 68, 68, 0.6),
         0 30px 80px rgba(0, 0, 0, 0.95);
       position: relative;
-      animation: cardFlipIn 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      animation: cardZoomIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       text-align: left;
       display: flex;
       flex-direction: column;
@@ -546,9 +546,68 @@
       box-sizing: border-box;
     }
 
-    @keyframes cardFlipIn {
-      0% { transform: scale(0.7) rotateY(35deg) translateY(30px); opacity: 0; }
-      100% { transform: scale(1) rotateY(0deg) translateY(0); opacity: 1; }
+    @keyframes cardZoomIn {
+      0% {
+        transform: scale(0.8) translateY(40px);
+        opacity: 0;
+        filter: blur(8px) brightness(1.4);
+      }
+      70% {
+        transform: scale(1.02) translateY(-4px);
+        opacity: 1;
+        filter: blur(0px) brightness(1.1);
+      }
+      100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+        filter: blur(0px) brightness(1);
+      }
+    }
+
+    /* Foil Holographic Light Sweep Across Card */
+    .modal-content::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        115deg,
+        transparent 35%,
+        rgba(255, 255, 255, 0.28) 48%,
+        rgba(250, 204, 21, 0.4) 50%,
+        rgba(255, 255, 255, 0.28) 52%,
+        transparent 65%
+      );
+      transform: translateX(-100%) translateY(-100%);
+      pointer-events: none;
+      z-index: 50;
+      animation: foilShimmer 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.25s forwards;
+    }
+
+    @keyframes foilShimmer {
+      0% { transform: translateX(-100%) translateY(-100%); }
+      100% { transform: translateX(100%) translateY(100%); }
+    }
+
+    /* Staggered Content Reveals for Smooth Presentation */
+    .ua-diagonal-name-wrap {
+      animation: heroNameSlide 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.15s backwards;
+    }
+
+    @keyframes heroNameSlide {
+      from { transform: rotate(-32deg) translateX(40px); opacity: 0; }
+      to { transform: rotate(-32deg) translateX(0); opacity: 1; }
+    }
+
+    .ua-bottom-deck {
+      animation: deckSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s backwards;
+    }
+
+    @keyframes deckSlideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
 
     /* Inner High-Tech Circuit Card Border */
