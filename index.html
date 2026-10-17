@@ -807,6 +807,186 @@
     }
 
     /* ==========================================================================
+       Lilah-Rose Diorama Introduction Overlay & Transitions
+       ========================================================================== */
+    .lilah-intro-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(11, 15, 25, 0.96);
+      background-image: 
+        radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.22) 0%, transparent 70%),
+        repeating-radial-gradient(circle at 50% 50%, transparent 0, transparent 8px, rgba(255, 255, 255, 0.04) 9px, rgba(255, 255, 255, 0.04) 10px),
+        linear-gradient(135deg, #131d2a 0%, #080c14 100%);
+      z-index: 290;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 16px;
+      opacity: 0;
+      transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .lilah-intro-overlay.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .lilah-intro-overlay.fade-out {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.45s ease-out;
+    }
+
+    .lilah-intro-card {
+      max-width: 580px;
+      width: 100%;
+      background: #111827;
+      border: 4px solid #facc15;
+      border-radius: 24px;
+      box-shadow: 
+        0 0 45px rgba(245, 158, 11, 0.35),
+        8px 8px 0px #000,
+        0 25px 50px rgba(0, 0, 0, 0.9);
+      padding: 32px 24px 28px;
+      text-align: center;
+      position: relative;
+      animation: lilahCardPop 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      cursor: default;
+    }
+
+    @keyframes lilahCardPop {
+      0% {
+        opacity: 0;
+        transform: scale(0.85) translateY(24px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .lilah-intro-top-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.65);
+      border: 1.5px solid #f59e0b;
+      padding: 4px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      font-weight: 800;
+      color: #facc15;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .lilah-intro-stars {
+      color: #f59e0b;
+      font-size: 1.1rem;
+      letter-spacing: 4px;
+      margin-bottom: 8px;
+    }
+
+    .lilah-intro-speech {
+      font-family: 'Bangers', cursive;
+      font-size: 2.5rem;
+      line-height: 1.15;
+      letter-spacing: 1.5px;
+      color: #ffffff;
+      text-transform: uppercase;
+      text-shadow: 
+        3px 3px 0px #000,
+        0 0 25px rgba(245, 158, 11, 0.5);
+      margin-bottom: 14px;
+    }
+
+    .lilah-intro-speech .highlight-name {
+      color: #facc15;
+      text-shadow: 3px 3px 0px #000, 0 0 20px rgba(250, 204, 21, 0.8);
+      display: inline-block;
+    }
+
+    .lilah-intro-speech .highlight-diorama {
+      color: #10b981;
+      text-shadow: 3px 3px 0px #000, 0 0 20px rgba(16, 185, 129, 0.8);
+      display: inline-block;
+    }
+
+    .lilah-intro-subtext {
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #cbd5e1;
+      line-height: 1.4;
+      margin-bottom: 24px;
+    }
+
+    .lilah-intro-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #f59e0b, #ef4444);
+      color: #ffffff;
+      font-family: 'Black Ops One', sans-serif;
+      font-size: 1.25rem;
+      letter-spacing: 2px;
+      padding: 14px 34px;
+      border: 3px solid #000;
+      border-radius: 999px;
+      box-shadow: 
+        0 0 25px rgba(245, 158, 11, 0.6),
+        4px 4px 0px #000;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .lilah-intro-btn:hover,
+    .lilah-intro-btn:active {
+      transform: scale(1.04) translateY(-2px);
+      box-shadow: 
+        0 0 35px rgba(245, 158, 11, 0.85),
+        6px 6px 0px #000;
+    }
+
+    .lilah-intro-skip-hint {
+      display: block;
+      margin-top: 14px;
+      font-size: 0.78rem;
+      color: #94a3b8;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    @media (max-width: 600px) {
+      .lilah-intro-card {
+        padding: 24px 18px 22px;
+        border-radius: 20px;
+        border-width: 3px;
+      }
+      .lilah-intro-speech {
+        font-size: 1.95rem;
+        line-height: 1.18;
+      }
+      .lilah-intro-subtext {
+        font-size: 0.95rem;
+        margin-bottom: 20px;
+      }
+      .lilah-intro-btn {
+        font-size: 1.1rem;
+        padding: 12px 24px;
+        max-width: 280px;
+      }
+    }
+
+    /* ==========================================================================
        Union Arena TCG Authentic Collectible Card (Matches Bakugo card.jpg)
        ========================================================================== */
     .modal-backdrop {
@@ -1633,6 +1813,26 @@
     </div>
   </div>
 
+  <!-- Lilah-Rose Diorama Introduction Overlay -->
+  <div class="lilah-intro-overlay" id="lilahIntroOverlay" onclick="dismissLilahIntro()">
+    <div class="lilah-intro-card" onclick="event.stopPropagation()">
+      <div class="lilah-intro-top-tag">
+        <span>&#9889; U.A. High Student Exhibition</span>
+      </div>
+      <div class="lilah-intro-stars">&#9733; &#9733; &#9733; &#9733; &#9733;</div>
+      <h1 class="lilah-intro-speech">
+        &ldquo;Hi my name is <span class="highlight-name">Lilah-Rose</span><br>and this is my <span class="highlight-diorama">Diorama</span>&rdquo;
+      </h1>
+      <p class="lilah-intro-subtext">
+        Welcome to the ultimate Deku vs. Bakugo showcase &amp; collectible card archive!
+      </p>
+      <button class="lilah-intro-btn" onclick="dismissLilahIntro()">
+        Enter Diorama &#9654;
+      </button>
+      <span class="lilah-intro-skip-hint">Tap anywhere or button to begin</span>
+    </div>
+  </div>
+
   <!-- Eyecatch Transition Container (Deku & Bakugo cinematic videos) -->
   <div class="eyecatch-overlay" id="eyecatchOverlay">
     <video class="eyecatch-video" id="eyecatchDekuVideo" playsinline webkit-playsinline x5-playsinline muted preload="auto" style="display: none;">
@@ -2047,6 +2247,43 @@
     // Intro Animation Control with Explosion Climax Transition
     let introDismissed = false;
     let explosionTriggered = false;
+    let lilahIntroDismissed = false;
+    let lilahAutoTimer = null;
+
+    function showLilahIntro() {
+      const lilahOverlay = document.getElementById("lilahIntroOverlay");
+      if (lilahOverlay) {
+        lilahOverlay.style.display = "flex";
+        // Force reflow for smooth opacity transition
+        void lilahOverlay.offsetWidth;
+        lilahOverlay.classList.add("active");
+      }
+
+      // Auto-advance after 5 seconds if user does not click
+      lilahAutoTimer = setTimeout(() => {
+        dismissLilahIntro();
+      }, 5000);
+    }
+
+    function dismissLilahIntro() {
+      if (lilahIntroDismissed) return;
+      lilahIntroDismissed = true;
+      if (lilahAutoTimer) clearTimeout(lilahAutoTimer);
+
+      const lilahOverlay = document.getElementById("lilahIntroOverlay");
+      const mainContainer = document.querySelector(".container");
+
+      if (mainContainer) {
+        mainContainer.classList.add("reveal-boom");
+      }
+
+      if (lilahOverlay) {
+        lilahOverlay.classList.add("fade-out");
+        setTimeout(() => {
+          lilahOverlay.style.display = "none";
+        }, 450);
+      }
+    }
 
     function triggerExplosionTransition() {
       if (explosionTriggered || introDismissed) return;
@@ -2056,7 +2293,6 @@
       const shockwave = document.getElementById("introShockwave");
       const introVid = document.getElementById("introAnimVideo");
       const intro = document.getElementById("introOverlay");
-      const mainContainer = document.querySelector(".container");
 
       // 1. Zoom and flare the final palm explosion frame
       if (introVid) introVid.classList.add("exploding");
@@ -2065,18 +2301,14 @@
       if (flash) flash.classList.add("detonate");
       if (shockwave) shockwave.classList.add("detonate");
 
-      // 3. Shake and animate the main screen entering from the blast center
-      if (mainContainer) {
-        mainContainer.classList.add("reveal-boom");
-      }
-
-      // 4. Smoothly fade the intro veil right at the peak of the flash (280ms)
+      // 3. Smoothly fade the opening video veil right at the peak of the flash and show Lilah's diorama greeting
       setTimeout(() => {
         if (intro) {
           intro.classList.add("fade-out");
           setTimeout(() => {
             intro.style.display = "none";
-          }, 500);
+            showLilahIntro();
+          }, 400);
         }
       }, 280);
     }
@@ -2086,19 +2318,16 @@
       introDismissed = true;
       const intro = document.getElementById("introOverlay");
       const introVid = document.getElementById("introAnimVideo");
-      const mainContainer = document.querySelector(".container");
 
       if (introVid) {
         try { introVid.pause(); } catch(e) {}
-      }
-      if (mainContainer) {
-        mainContainer.classList.add("reveal-boom");
       }
       if (intro) {
         intro.classList.add("fade-out");
         setTimeout(() => {
           intro.style.display = "none";
-        }, 500);
+          showLilahIntro();
+        }, 350);
       }
     }
 
