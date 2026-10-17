@@ -2167,9 +2167,9 @@
 
     function getAudioContext() {
       if (!audioCtx) {
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        if (AudioContext) {
-          audioCtx = new AudioContext();
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) {
+          audioCtx = new AudioContextClass();
         }
       }
       if (audioCtx && audioCtx.state === 'suspended') {
@@ -2178,14 +2178,35 @@
       return audioCtx;
     }
 
+    // Bulletproof unlock on any initial touch or click anywhere on the page
+    function unlockAudioContext() {
+      try {
+        const ctx = getAudioContext();
+        if (ctx) {
+          if (ctx.state === 'suspended') {
+            ctx.resume();
+          }
+          // Play silent buffer to force hardware audio unlock across iOS Safari & Android
+          const buffer = ctx.createBuffer(1, 1, 22050);
+          const source = ctx.createBufferSource();
+          source.buffer = buffer;
+          source.connect(ctx.destination);
+          source.start(0);
+        }
+      } catch(e) {}
+    }
+    ['touchstart', 'touchend', 'pointerdown', 'click', 'keydown'].forEach(evt => {
+      window.addEventListener(evt, unlockAudioContext, { passive: true, once: false });
+    });
+
     function toggleSoundFX() {
+      unlockAudioContext();
       soundEnabled = !soundEnabled;
       const btn = document.getElementById("soundToggleBtn");
       const icon = document.getElementById("soundIcon");
       const label = document.getElementById("soundLabel");
 
       if (soundEnabled) {
-        getAudioContext();
         if (btn) btn.className = "sound-toggle-btn sound-on";
         if (icon) icon.innerHTML = "&#128266;";
         if (label) label.textContent = "SFX ON";
@@ -2197,44 +2218,46 @@
       }
     }
 
-    // Bakugo Explosion Sound (Dense low pass noise burst + sub bass thud)
+    // Bakugo Explosion Sound (Sub bass blast + high crackle distortion)
     function playBakugoExplosionSound() {
       if (!soundEnabled) return;
       try {
+        unlockAudioContext();
         const ctx = getAudioContext();
         if (!ctx) return;
         const now = ctx.currentTime;
 
-        // Sub bass thump
-        const osc = ctx.createOscillator();
-        const oscGain = ctx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(140, now);
-        osc.frequency.exponentialRampToValueAtTime(32, now + 0.35);
-        oscGain.gain.setValueAtTime(0.8, now);
-        oscGain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
-        osc.connect(oscGain);
-        oscGain.connect(ctx.destination);
-        osc.start(now);
-        osc.stop(now + 0.4);
+        // Sub bass blast drop (180Hz -> 30Hz)
+        const sub = ctx.createOscillator();
+        const subGain = ctx.createGain();
+        sub.type = 'triangle';
+        sub.frequency.setValueAtTime(180, now);
+        sub.frequency.exponentialRampToValueAtTime(28, now + 0.55);
+        subGain.gain.setValueAtTime(0.9, now);
+        subGain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+        sub.connect(subGain);
+        subGain.connect(ctx.destination);
+        sub.start(now);
+        sub.stop(now + 0.6);
 
-        // White noise explosion crackle
-        const bufferSize = ctx.sampleRate * 0.45;
-        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-        const data = buffer.getChannelData(0);
-        for (let i = 0; i < bufferSize; i++) {
-          data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.12));
+        // Explosion White Noise Burst
+        const bufLen = Math.floor(ctx.sampleRate * 0.6);
+        const buf = ctx.createBuffer(1, bufLen, ctx.sampleRate);
+        const data = buf.getChannelData(0);
+        for (let i = 0; i < bufLen; i++) {
+          data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.14));
         }
         const noise = ctx.createBufferSource();
-        noise.buffer = buffer;
+        noise.buffer = buf;
+
         const filter = ctx.createBiquadFilter();
         filter.type = 'lowpass';
-        filter.frequency.setValueAtTime(1100, now);
-        filter.frequency.exponentialRampToValueAtTime(180, now + 0.45);
+        filter.frequency.setValueAtTime(1800, now);
+        filter.frequency.exponentialRampToValueAtTime(120, now + 0.6);
 
         const noiseGain = ctx.createGain();
-        noiseGain.gain.setValueAtTime(0.7, now);
-        noiseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.45);
+        noiseGain.gain.setValueAtTime(0.85, now);
+        noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
 
         noise.connect(filter);
         filter.connect(noiseGain);
@@ -2243,61 +2266,63 @@
       } catch(e) {}
     }
 
-    // Deku Smash / Lightning Impact Sound (High resonance laser sweep + impact punch)
+    // Deku Smash / Lightning Impact Sound (High electric sweep + heavyweight punch thud)
     function playDekuSmashSound() {
       if (!soundEnabled) return;
       try {
+        unlockAudioContext();
         const ctx = getAudioContext();
         if (!ctx) return;
         const now = ctx.currentTime;
 
-        // Laser electric chime sweep (One For All full cowl activation)
-        const chime = ctx.createOscillator();
-        const chimeGain = ctx.createGain();
-        chime.type = 'sawtooth';
-        chime.frequency.setValueAtTime(880, now);
-        chime.frequency.exponentialRampToValueAtTime(220, now + 0.28);
-        chimeGain.gain.setValueAtTime(0.5, now);
-        chimeGain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
-        chime.connect(chimeGain);
-        chimeGain.connect(ctx.destination);
-        chime.start(now);
-        chime.stop(now + 0.3);
+        // One For All Electric Chime laser sweep (1400Hz down to 220Hz)
+        const laser = ctx.createOscillator();
+        const laserGain = ctx.createGain();
+        laser.type = 'sawtooth';
+        laser.frequency.setValueAtTime(1400, now);
+        laser.frequency.exponentialRampToValueAtTime(240, now + 0.35);
+        laserGain.gain.setValueAtTime(0.65, now);
+        laserGain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
+        laser.connect(laserGain);
+        laserGain.connect(ctx.destination);
+        laser.start(now);
+        laser.stop(now + 0.38);
 
-        // Punch impact thud
-        const osc = ctx.createOscillator();
-        const oscGain = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(160, now);
-        osc.frequency.exponentialRampToValueAtTime(45, now + 0.3);
-        oscGain.gain.setValueAtTime(0.75, now);
-        oscGain.gain.exponentialRampToValueAtTime(0.01, now + 0.32);
-        osc.connect(oscGain);
-        oscGain.connect(ctx.destination);
-        osc.start(now);
-        osc.stop(now + 0.32);
+        // Heavy Detroit Smash impact punch thud (220Hz down to 40Hz)
+        const punch = ctx.createOscillator();
+        const punchGain = ctx.createGain();
+        punch.type = 'sine';
+        punch.frequency.setValueAtTime(220, now);
+        punch.frequency.exponentialRampToValueAtTime(38, now + 0.45);
+        punchGain.gain.setValueAtTime(0.95, now);
+        punchGain.gain.exponentialRampToValueAtTime(0.001, now + 0.48);
+        punch.connect(punchGain);
+        punchGain.connect(ctx.destination);
+        punch.start(now);
+        punch.stop(now + 0.48);
       } catch(e) {}
     }
 
-    // Card Reveal Foil Shimmer Sound (High twinkling ascending arpeggio)
+    // Card Reveal Foil Shimmer Sound (Ascending magical harp/crystal chime)
     function playCardShimmerSound() {
       if (!soundEnabled) return;
       try {
+        unlockAudioContext();
         const ctx = getAudioContext();
         if (!ctx) return;
         const now = ctx.currentTime;
-        const freqs = [523.25, 659.25, 783.99, 1046.50, 1318.51];
-        freqs.forEach((f, idx) => {
+        const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51, 1567.98];
+        notes.forEach((f, idx) => {
           const osc = ctx.createOscillator();
           const gain = ctx.createGain();
           osc.type = 'sine';
-          osc.frequency.setValueAtTime(f, now + idx * 0.06);
-          gain.gain.setValueAtTime(0.18, now + idx * 0.06);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.06 + 0.22);
+          osc.frequency.setValueAtTime(f, now + idx * 0.055);
+          gain.gain.setValueAtTime(0.35, now + idx * 0.055);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.055 + 0.3);
           osc.connect(gain);
           gain.connect(ctx.destination);
-          osc.start(now + idx * 0.06);
-          osc.stop(now + idx * 0.06 + 0.25);
+          osc.start(now + idx * 0.055);
+          osc.stop(now + idx * 0.055 + 0.32);
         });
       } catch(e) {}
     }
@@ -2305,6 +2330,7 @@
     function playHeroSparkSound() {
       if (!soundEnabled) return;
       try {
+        unlockAudioContext();
         const ctx = getAudioContext();
         if (!ctx) return;
         const now = ctx.currentTime;
@@ -2312,13 +2338,13 @@
         const gain = ctx.createGain();
         osc.type = 'triangle';
         osc.frequency.setValueAtTime(440, now);
-        osc.frequency.exponentialRampToValueAtTime(880, now + 0.12);
-        gain.gain.setValueAtTime(0.3, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+        osc.frequency.exponentialRampToValueAtTime(880, now + 0.15);
+        gain.gain.setValueAtTime(0.4, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
         osc.connect(gain);
         gain.connect(ctx.destination);
         osc.start(now);
-        osc.stop(now + 0.15);
+        osc.stop(now + 0.18);
       } catch(e) {}
     }
 
