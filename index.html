@@ -646,6 +646,7 @@
     }
 
     /* Page Intro Animation Overlay */
+    /* Page Intro Animation Overlay */
     .intro-overlay {
       position: fixed;
       inset: 0;
@@ -655,8 +656,9 @@
       justify-content: center;
       align-items: center;
       opacity: 1;
-      transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
+      overflow: hidden;
     }
 
     .intro-overlay.fade-out {
@@ -684,6 +686,100 @@
       box-shadow: 0 0 50px rgba(245, 158, 11, 0.45);
       border-radius: 12px;
       border: 3px solid rgba(250, 204, 21, 0.3);
+      transition: transform 0.4s ease-out, filter 0.4s ease-out;
+    }
+
+    /* Dramatic zoom burst on the palm explosion */
+    .intro-anim-media.exploding {
+      transform: scale(1.18);
+      filter: brightness(2.2) contrast(1.4) drop-shadow(0 0 60px #f59e0b);
+    }
+
+    /* Full-screen Blinding Explosion Flash */
+    .intro-explosion-flash {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, #ffffff 0%, #fef08a 25%, #f97316 65%, transparent 100%);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 10;
+      mix-blend-mode: screen;
+    }
+
+    .intro-explosion-flash.detonate {
+      animation: explosionFlash 0.75s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+    }
+
+    @keyframes explosionFlash {
+      0% {
+        opacity: 0;
+        transform: scale(0.6);
+      }
+      25% {
+        opacity: 1;
+        transform: scale(1.4);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(2.2);
+      }
+    }
+
+    /* Expanding Shockwave Ring */
+    .intro-shockwave {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 8px solid #facc15;
+      box-shadow: 0 0 40px #ef4444, inset 0 0 30px #f59e0b;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 11;
+      transform: translate(-50%, -50%) scale(0.2);
+      top: 50%;
+      left: 50%;
+    }
+
+    .intro-shockwave.detonate {
+      animation: shockwaveExpand 0.7s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+    }
+
+    @keyframes shockwaveExpand {
+      0% {
+        opacity: 0.95;
+        transform: translate(-50%, -50%) scale(0.2);
+        border-width: 16px;
+      }
+      60% {
+        opacity: 0.8;
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(15);
+        border-width: 1px;
+      }
+    }
+
+    /* Main Showcase Reveal Boom Animation */
+    .container.reveal-boom {
+      animation: mainScreenEntrance 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+    }
+
+    @keyframes mainScreenEntrance {
+      0% {
+        transform: scale(0.88) translateY(30px);
+        opacity: 0;
+        filter: brightness(1.8) drop-shadow(0 0 50px #f59e0b);
+      }
+      50% {
+        filter: brightness(1.2) drop-shadow(0 0 30px #f59e0b);
+      }
+      100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+        filter: brightness(1) drop-shadow(0 0 0 transparent);
+      }
     }
 
     .intro-skip-btn {
@@ -701,7 +797,7 @@
       cursor: pointer;
       box-shadow: 3px 3px 0px #000;
       transition: transform 0.2s, background 0.2s, color 0.2s;
-      z-index: 10;
+      z-index: 20;
     }
 
     .intro-skip-btn:hover {
@@ -1530,6 +1626,9 @@
       <video class="intro-anim-media" id="introAnimVideo" autoplay muted playsinline preload="auto">
         <source src="intro_animation.mp4" type="video/mp4">
       </video>
+      <!-- Cinematic Explosion Burst Elements -->
+      <div class="intro-explosion-flash" id="introExplosionFlash"></div>
+      <div class="intro-shockwave" id="introShockwave"></div>
       <button class="intro-skip-btn" onclick="event.stopPropagation(); dismissIntroAnimation();" aria-label="Skip Animation">SKIP &rarr;</button>
     </div>
   </div>
@@ -1945,25 +2044,65 @@
       arena.classList.remove("active-deku");
     }
 
-    // Intro Animation Control
+    // Intro Animation Control with Explosion Climax Transition
     let introDismissed = false;
+    let explosionTriggered = false;
+
+    function triggerExplosionTransition() {
+      if (explosionTriggered || introDismissed) return;
+      explosionTriggered = true;
+
+      const flash = document.getElementById("introExplosionFlash");
+      const shockwave = document.getElementById("introShockwave");
+      const introVid = document.getElementById("introAnimVideo");
+      const intro = document.getElementById("introOverlay");
+      const mainContainer = document.querySelector(".container");
+
+      // 1. Zoom and flare the final palm explosion frame
+      if (introVid) introVid.classList.add("exploding");
+
+      // 2. Detonate blinding blast flash and shockwave ring
+      if (flash) flash.classList.add("detonate");
+      if (shockwave) shockwave.classList.add("detonate");
+
+      // 3. Shake and animate the main screen entering from the blast center
+      if (mainContainer) {
+        mainContainer.classList.add("reveal-boom");
+      }
+
+      // 4. Smoothly fade the intro veil right at the peak of the flash (280ms)
+      setTimeout(() => {
+        if (intro) {
+          intro.classList.add("fade-out");
+          setTimeout(() => {
+            intro.style.display = "none";
+          }, 500);
+        }
+      }, 280);
+    }
+
     function dismissIntroAnimation() {
       if (introDismissed) return;
       introDismissed = true;
       const intro = document.getElementById("introOverlay");
       const introVid = document.getElementById("introAnimVideo");
+      const mainContainer = document.querySelector(".container");
+
       if (introVid) {
         try { introVid.pause(); } catch(e) {}
+      }
+      if (mainContainer) {
+        mainContainer.classList.add("reveal-boom");
       }
       if (intro) {
         intro.classList.add("fade-out");
         setTimeout(() => {
           intro.style.display = "none";
-        }, 600);
+        }, 500);
       }
     }
 
-    // Auto play intro MP4 and dismiss cleanly when completed
+    // Auto play intro MP4 and sync explosion transition seamlessly at the last frame
     window.addEventListener("DOMContentLoaded", () => {
       const introVid = document.getElementById("introAnimVideo");
       if (introVid) {
@@ -1978,12 +2117,21 @@
         };
         startPlay();
 
-        // When video ends, smoothly fade into showcase
-        introVid.addEventListener("ended", () => {
-          dismissIntroAnimation();
+        // Detect apex of Bakugo's palm flare (~3.6s to 3.8s) right before loop ends
+        introVid.addEventListener("timeupdate", () => {
+          if (introVid.currentTime >= 3.65 && !explosionTriggered) {
+            triggerExplosionTransition();
+          }
         });
 
-        // If user touches or clicks anywhere on intro screen, dismiss
+        // When video ends, ensure transition completes
+        introVid.addEventListener("ended", () => {
+          if (!explosionTriggered) {
+            triggerExplosionTransition();
+          }
+        });
+
+        // If user touches or clicks anywhere on intro screen, dismiss immediately
         document.getElementById("introOverlay").addEventListener("click", () => {
           dismissIntroAnimation();
         });
