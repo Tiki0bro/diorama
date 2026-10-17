@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Deku & Bakugo - Diorama Story</title>
+  <title>Deku vs Bakugo - Diorama Exhibition</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -16,7 +16,7 @@
 
     body {
       min-height: 100vh;
-      background: radial-gradient(circle at 20% 20%, #1e3c2f 0%, #0d131a 60%, #1a0f08 100%);
+      background: radial-gradient(circle at 50% 20%, #15222e 0%, #090e13 70%, #030608 100%);
       font-family: 'Nunito', sans-serif;
       color: #f3f4f6;
       display: flex;
@@ -26,81 +26,187 @@
     }
 
     .container {
-      max-width: 640px;
+      max-width: 680px;
       width: 100%;
-      background: rgba(18, 24, 33, 0.92);
-      border-radius: 24px;
-      border: 3px solid #ff7b00;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(255, 123, 0, 0.25);
+      background: rgba(17, 24, 39, 0.95);
+      border-radius: 28px;
+      border: 3px solid #facc15;
+      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.8), 0 0 35px rgba(250, 204, 21, 0.2);
       overflow: hidden;
       text-align: center;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
     }
 
     .header {
-      background: linear-gradient(135deg, #10b981 0%, #f97316 100%);
-      padding: 20px 16px;
+      background: linear-gradient(135deg, #ea580c 0%, #111827 50%, #059669 100%);
+      padding: 24px 16px;
+      border-bottom: 3px solid #374151;
       position: relative;
     }
 
     .badge {
       display: inline-block;
-      background: #111827;
+      background: #000;
       color: #facc15;
       font-family: 'Bangers', cursive;
-      font-size: 1.1rem;
-      letter-spacing: 1.5px;
-      padding: 4px 14px;
+      font-size: 1.15rem;
+      letter-spacing: 2px;
+      padding: 5px 16px;
       border-radius: 999px;
       margin-bottom: 8px;
+      border: 2px solid #facc15;
       text-transform: uppercase;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
     }
 
     h1 {
       font-family: 'Bangers', cursive;
-      font-size: 2.6rem;
-      letter-spacing: 2px;
+      font-size: 3rem;
+      letter-spacing: 3px;
       color: #ffffff;
-      text-shadow: 3px 3px 0px #000;
+      text-shadow: 3px 3px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000;
       line-height: 1.1;
     }
 
-    .image-wrapper {
-      padding: 20px 20px 10px 20px;
+    .sub-cue {
+      margin-top: 10px;
+      font-size: 0.95rem;
+      color: #e5e7eb;
+      font-weight: 700;
+      background: rgba(0,0,0,0.4);
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 20px;
     }
 
-    .image-frame {
-      border-radius: 16px;
+    /* Split interactive image container */
+    .arena-section {
+      padding: 22px 20px 10px 20px;
+    }
+
+    .arena-frame {
+      position: relative;
+      border-radius: 20px;
       overflow: hidden;
-      border: 4px solid #facc15;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+      border: 4px solid #374151;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.7);
       background: #000;
-      line-height: 0;
+      user-select: none;
     }
 
-    .image-frame img {
+    .base-img {
       width: 100%;
       height: auto;
       display: block;
-      transition: transform 0.3s ease;
+      transition: filter 0.3s ease;
     }
 
+    /* Hotspot split halves */
+    .half-side {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 50%;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      padding-bottom: 16px;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .side-bakugo {
+      left: 0;
+    }
+
+    .side-deku {
+      right: 0;
+    }
+
+    /* Hover highlight overlays */
+    .side-bakugo::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.45) 0%, rgba(249, 115, 22, 0.25) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      box-shadow: inset 0 0 30px rgba(239, 68, 68, 0.8);
+    }
+
+    .side-deku::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(225deg, rgba(16, 185, 129, 0.45) 0%, rgba(56, 189, 248, 0.25) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      box-shadow: inset 0 0 30px rgba(16, 185, 129, 0.8);
+    }
+
+    .side-bakugo:hover::before,
+    .side-bakugo.active-touch::before {
+      opacity: 1;
+    }
+
+    .side-deku:hover::before,
+    .side-deku.active-touch::before {
+      opacity: 1;
+    }
+
+    .hero-btn {
+      position: relative;
+      z-index: 12;
+      font-family: 'Bangers', cursive;
+      font-size: 1.15rem;
+      letter-spacing: 1px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      color: #fff;
+      text-transform: uppercase;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      border: 2px solid #fff;
+    }
+
+    .btn-bakugo {
+      background: linear-gradient(135deg, #dc2626, #ea580c);
+    }
+
+    .btn-deku {
+      background: linear-gradient(135deg, #059669, #0284c7);
+    }
+
+    .side-bakugo:hover .hero-btn {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 6px 20px rgba(239, 68, 68, 0.8);
+    }
+
+    .side-deku:hover .hero-btn {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.8);
+    }
+
+    /* Story Card */
     .story-card {
-      margin: 16px 20px 24px 20px;
-      background: #1f2937;
-      border-radius: 16px;
+      margin: 18px 20px;
+      background: #1e293b;
+      border-radius: 18px;
       padding: 22px 20px;
       border-left: 6px solid #10b981;
-      border-right: 6px solid #f97316;
-      box-shadow: inset 0 2px 6px rgba(0,0,0,0.4);
+      border-right: 6px solid #ef4444;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
     }
 
     .story-title {
       font-family: 'Bangers', cursive;
-      font-size: 1.5rem;
-      color: #38bdf8;
-      letter-spacing: 1px;
+      font-size: 1.6rem;
+      color: #facc15;
+      letter-spacing: 1.5px;
       margin-bottom: 12px;
       text-shadow: 1px 1px 0px #000;
     }
@@ -108,31 +214,169 @@
     .story-text {
       font-size: 1.15rem;
       line-height: 1.7;
-      color: #f9fafb;
+      color: #f3f4f6;
       font-weight: 700;
     }
 
-    .story-text span.highlight-hero {
+    .highlight-hero-deku {
       color: #34d399;
-      text-decoration: underline;
+      font-weight: 900;
     }
 
-    .story-text span.highlight-saved {
+    .highlight-hero-baku {
+      color: #fb923c;
+      font-weight: 900;
+    }
+
+    .highlight-saved {
       color: #facc15;
       font-size: 1.25rem;
       letter-spacing: 1px;
-      text-shadow: 0 0 8px rgba(250, 204, 21, 0.6);
+      text-shadow: 0 0 10px rgba(250, 204, 21, 0.6);
+    }
+
+    /* Modal / Pop-up window for stats */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      background: #111827;
+      border-radius: 24px;
+      max-width: 480px;
+      width: 100%;
+      border: 4px solid #fff;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.9);
+      overflow: hidden;
+      position: relative;
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      text-align: left;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-header {
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+    }
+
+    .modal-header.bakugo-theme {
+      background: linear-gradient(135deg, #b91c1c, #ea580c);
+      border-bottom: 3px solid #7f1d1d;
+    }
+
+    .modal-header.deku-theme {
+      background: linear-gradient(135deg, #047857, #0284c7);
+      border-bottom: 3px solid #064e3b;
+    }
+
+    .modal-title {
+      font-family: 'Bangers', cursive;
+      font-size: 2.2rem;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 0px #000;
+    }
+
+    .modal-hero-alias {
+      font-size: 0.95rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0.95;
+    }
+
+    .close-btn {
+      background: rgba(0, 0, 0, 0.5);
+      border: 2px solid #fff;
+      color: #fff;
+      font-size: 1.5rem;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .close-btn:hover {
+      transform: scale(1.15) rotate(90deg);
+      background: #000;
+    }
+
+    .modal-body {
+      padding: 24px;
+    }
+
+    .stat-row {
+      display: flex;
+      align-items: center;
+      background: #1f2937;
+      margin-bottom: 12px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border-left: 5px solid #facc15;
+    }
+
+    .stat-label {
+      width: 140px;
+      font-family: 'Bangers', cursive;
+      font-size: 1.25rem;
+      letter-spacing: 1px;
+      color: #9ca3af;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+
+    .stat-value {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .quote-box {
+      margin-top: 18px;
+      padding: 14px 18px;
+      background: #374151;
+      border-radius: 12px;
+      font-style: italic;
+      color: #facc15;
+      font-weight: 700;
+      text-align: center;
+      border: 1px dashed rgba(250, 204, 21, 0.5);
     }
 
     .footer {
-      padding: 12px 16px 20px;
+      padding: 12px 16px 22px;
       font-size: 0.9rem;
       color: #9ca3af;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .sparkle {
-      color: #facc15;
     }
   </style>
 </head>
@@ -141,24 +385,133 @@
     <div class="header">
       <div class="badge">Diorama Exhibition</div>
       <h1>Deku &amp; Bakugo</h1>
+      <div class="sub-cue">&#128070; Hover &amp; Click either hero to view hero stats!</div>
     </div>
 
-    <div class="image-wrapper">
-      <div class="image-frame">
-        <img src="deku_bakugo.jpg" alt="Deku fighting Bakugo" />
+    <div class="arena-section">
+      <div class="arena-frame">
+        <img src="deku_bakugo.jpg" alt="Bakugo vs Deku" class="base-img" />
+        
+        <!-- Left Side: Bakugo -->
+        <div class="half-side side-bakugo" onclick="openHeroModal('bakugo')" title="Click to view Bakugo's Hero Stats">
+          <div class="hero-btn btn-bakugo">&#128165; Bakugo Stats</div>
+        </div>
+
+        <!-- Right Side: Deku -->
+        <div class="half-side side-deku" onclick="openHeroModal('deku')" title="Click to view Deku's Hero Stats">
+          <div class="hero-btn btn-deku">&#9889; Deku Stats</div>
+        </div>
       </div>
     </div>
 
     <div class="story-card">
-      <div class="story-title">&#9733; The Journey of Two Heroes &#9733;</div>
+      <div class="story-title">&#9733; The Story of Two Heroes &#9733;</div>
       <p class="story-text">
-        These young men named <span class="highlight-hero">Deku</span> and <span class="highlight-hero">Bakugo</span> have been enemies for over 11 years. After enrolling at UA High School together, they grew more and more comfortable with each other, and eventually they grew so close and <span class="highlight-saved">SAVED</span> the world.
+        These young men named <span class="highlight-hero-deku">Deku</span> and <span class="highlight-hero-baku">Bakugo</span> have been enemies for over 11 years. After enrolling at UA High School together, they grew more and more comfortable with each other, and eventually they grew so close and <span class="highlight-saved">SAVED</span> the world.
       </p>
     </div>
 
     <div class="footer">
-      <span class="sparkle">&#10024;</span> Created with passion for the school diorama showcase <span class="sparkle">&#10024;</span>
+      &#10024; Created with passion for the school diorama showcase &#10024;
     </div>
   </div>
+
+  <!-- Hero Stats Modal -->
+  <div class="modal-backdrop" id="heroModal" onclick="handleBackdropClick(event)">
+    <div class="modal-content" id="modalContent">
+      <div class="modal-header" id="modalHeader">
+        <div>
+          <div class="modal-title" id="modalName">Hero Name</div>
+          <div class="modal-hero-alias" id="modalAlias">Hero Alias</div>
+        </div>
+        <button class="close-btn" onclick="closeHeroModal()" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="stat-row">
+          <div class="stat-label">Hero Name:</div>
+          <div class="stat-value" id="statHeroName">Name</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-label">Age:</div>
+          <div class="stat-value" id="statAge">16</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-label">Quirk:</div>
+          <div class="stat-value" id="statQuirk">Quirk Name</div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-label">Fav Food:</div>
+          <div class="stat-value" id="statFood">Food</div>
+        </div>
+        <div class="quote-box" id="statQuote">
+          "Hero Quote"
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const heroData = {
+      bakugo: {
+        name: "Katsuki Bakugo",
+        alias: "Great Explosion Murder God Dynamight",
+        heroName: "Dynamight (Kacchan)",
+        age: "16 years old",
+        quirk: "Explosion (Nitroglycerin sweat from palm glands)",
+        food: "Spicy Food & Mountain Climbing Food",
+        quote: "\"I'm gonna be the number one hero, and I'll surpass All Might!\"",
+        theme: "bakugo-theme",
+        accent: "#ef4444"
+      },
+      deku: {
+        name: "Izuku Midoriya",
+        alias: "Hero Name: Deku",
+        heroName: "Deku",
+        age: "16 years old",
+        quirk: "One For All (Super strength + gear-shift & multiple quirks)",
+        food: "Katsudon (Pork Cutlet Rice Bowl)",
+        quote: "\"A hero is someone who smashes through every obstacle and never gives up!\"",
+        theme: "deku-theme",
+        accent: "#10b981"
+      }
+    };
+
+    function openHeroModal(heroKey) {
+      const data = heroData[heroKey];
+      if (!data) return;
+
+      const header = document.getElementById("modalHeader");
+      header.className = "modal-header " + data.theme;
+
+      document.getElementById("modalName").textContent = data.name;
+      document.getElementById("modalAlias").textContent = data.alias;
+      document.getElementById("statHeroName").textContent = data.heroName;
+      document.getElementById("statAge").textContent = data.age;
+      document.getElementById("statQuirk").textContent = data.quirk;
+      document.getElementById("statFood").textContent = data.food;
+      document.getElementById("statQuote").textContent = data.quote;
+
+      document.getElementById("modalContent").style.borderColor = data.accent;
+
+      const modal = document.getElementById("heroModal");
+      modal.classList.add("open");
+    }
+
+    function closeHeroModal() {
+      document.getElementById("heroModal").classList.remove("open");
+    }
+
+    function handleBackdropClick(event) {
+      if (event.target === document.getElementById("heroModal")) {
+        closeHeroModal();
+      }
+    }
+
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") {
+        closeHeroModal();
+      }
+    });
+  </script>
 </body>
 </html>
