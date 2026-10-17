@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Deku vs Bakugo - Diorama Exhibition</title>
+  <title>Deku & Bakugo - PLUS ULTRA Diorama Showcase</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Black+Ops+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -16,81 +16,147 @@
 
     body {
       min-height: 100vh;
-      background: radial-gradient(circle at 50% 20%, #15222e 0%, #090e13 70%, #030608 100%);
+      /* Comic manga speed-lines / halftone battle burst background */
+      background-color: #0b0f19;
+      background-image: 
+        radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.12) 0%, transparent 60%),
+        repeating-radial-gradient(circle at 50% 50%, transparent 0, transparent 8px, rgba(255, 255, 255, 0.03) 9px, rgba(255, 255, 255, 0.03) 10px),
+        linear-gradient(135deg, #131d2a 0%, #080c14 100%);
       font-family: 'Nunito', sans-serif;
       color: #f3f4f6;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 24px 16px;
+      overflow-x: hidden;
     }
 
+    /* MHA Comic Wrapper Card */
     .container {
-      max-width: 680px;
+      max-width: 720px;
       width: 100%;
-      background: rgba(17, 24, 39, 0.95);
+      background: #111827;
       border-radius: 28px;
-      border: 3px solid #facc15;
-      box-shadow: 0 16px 50px rgba(0, 0, 0, 0.8), 0 0 35px rgba(250, 204, 21, 0.2);
+      border: 4px solid #000;
+      box-shadow: 
+        10px 10px 0px #f59e0b, 
+        14px 14px 0px #000, 
+        0 25px 60px rgba(0,0,0,0.8);
       overflow: hidden;
       text-align: center;
-      backdrop-filter: blur(12px);
-    }
-
-    .header {
-      background: linear-gradient(135deg, #ea580c 0%, #111827 50%, #059669 100%);
-      padding: 24px 16px;
-      border-bottom: 3px solid #374151;
       position: relative;
     }
 
-    .badge {
-      display: inline-block;
-      background: #000;
-      color: #facc15;
+    /* Top Caution / UA Tape Banner */
+    .mha-hazard-bar {
+      height: 12px;
+      background: repeating-linear-gradient(
+        -45deg,
+        #f59e0b,
+        #f59e0b 16px,
+        #111827 16px,
+        #111827 32px
+      );
+      border-bottom: 2px solid #000;
+    }
+
+    /* MHA Header Section */
+    .header {
+      background: linear-gradient(135deg, #b91c1c 0%, #d97706 40%, #059669 100%);
+      padding: 24px 20px 20px;
+      border-bottom: 4px solid #000;
+      position: relative;
+    }
+
+    .ua-emblem {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #1e3a8a;
+      border: 3px solid #facc15;
+      padding: 4px 18px;
+      border-radius: 10px;
+      box-shadow: 4px 4px 0px #000;
+      margin-bottom: 12px;
+      transform: rotate(-1.5deg);
+    }
+
+    .ua-text {
+      font-family: 'Black Ops One', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 3px;
+      color: #fff;
+      text-shadow: 2px 2px 0px #000;
+    }
+
+    .ua-sub {
       font-family: 'Bangers', cursive;
-      font-size: 1.15rem;
-      letter-spacing: 2px;
-      padding: 5px 16px;
-      border-radius: 999px;
-      margin-bottom: 8px;
-      border: 2px solid #facc15;
-      text-transform: uppercase;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      font-size: 1.1rem;
+      color: #facc15;
+      margin-left: 8px;
+      letter-spacing: 1px;
+    }
+
+    .manga-title-wrap {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 6px;
     }
 
     h1 {
       font-family: 'Bangers', cursive;
-      font-size: 3rem;
-      letter-spacing: 3px;
+      font-size: 3.5rem;
+      letter-spacing: 4px;
       color: #ffffff;
-      text-shadow: 3px 3px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000;
-      line-height: 1.1;
+      text-shadow: 
+        4px 4px 0px #000, 
+        -2px -2px 0px #000, 
+        2px -2px 0px #000, 
+        -2px 2px 0px #000;
+      line-height: 1.05;
+      transform: skew(-3deg);
+    }
+
+    .plus-ultra-pill {
+      font-family: 'Bangers', cursive;
+      display: inline-block;
+      background: #ef4444;
+      color: #fff;
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      padding: 3px 18px;
+      border-radius: 999px;
+      border: 2px solid #000;
+      box-shadow: 3px 3px 0px #000;
+      margin-top: 4px;
     }
 
     .sub-cue {
-      margin-top: 10px;
+      margin-top: 14px;
       font-size: 0.95rem;
-      color: #e5e7eb;
-      font-weight: 700;
-      background: rgba(0,0,0,0.45);
+      color: #111827;
+      font-weight: 800;
+      background: #facc15;
       display: inline-block;
-      padding: 5px 16px;
+      padding: 5px 18px;
       border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 2px solid #000;
+      box-shadow: 3px 3px 0px #000;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    /* Split interactive image container */
+    /* Comic Arena Frame */
     .arena-section {
-      padding: 22px 20px 10px 20px;
+      padding: 24px 20px 12px 20px;
     }
 
     .arena-frame {
       position: relative;
-      border-radius: 20px;
+      border-radius: 18px;
       overflow: hidden;
-      border: 4px solid #374151;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+      border: 4px solid #000;
+      box-shadow: 6px 6px 0px #000, 0 10px 25px rgba(0,0,0,0.6);
       background: #000;
       user-select: none;
     }
@@ -113,7 +179,7 @@
       flex-direction: column;
       justify-content: flex-end;
       align-items: center;
-      padding-bottom: 18px;
+      padding-bottom: 20px;
       transition: all 0.3s ease;
       z-index: 10;
     }
@@ -126,27 +192,27 @@
       right: 0;
     }
 
-    /* Hover highlight overlays */
+    /* Comic Action Glow Overlays */
     .side-bakugo::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(239, 68, 68, 0.45) 0%, rgba(249, 115, 22, 0.25) 100%);
+      background: radial-gradient(circle at center, rgba(239, 68, 68, 0.5) 0%, rgba(249, 115, 22, 0.4) 100%);
       opacity: 0;
       transition: opacity 0.3s ease;
       pointer-events: none;
-      box-shadow: inset 0 0 35px rgba(239, 68, 68, 0.85);
+      box-shadow: inset 0 0 45px rgba(239, 68, 68, 0.95);
     }
 
     .side-deku::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(225deg, rgba(16, 185, 129, 0.45) 0%, rgba(56, 189, 248, 0.25) 100%);
+      background: radial-gradient(circle at center, rgba(16, 185, 129, 0.5) 0%, rgba(14, 165, 233, 0.4) 100%);
       opacity: 0;
       transition: opacity 0.3s ease;
       pointer-events: none;
-      box-shadow: inset 0 0 35px rgba(16, 185, 129, 0.85);
+      box-shadow: inset 0 0 45px rgba(16, 185, 129, 0.95);
     }
 
     .side-bakugo:hover::before {
@@ -157,82 +223,108 @@
       opacity: 1;
     }
 
+    /* Comic Action Hero Badges */
     .hero-btn {
       position: relative;
       z-index: 12;
       font-family: 'Bangers', cursive;
-      font-size: 1.3rem;
-      letter-spacing: 1.5px;
-      padding: 9px 24px;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      padding: 9px 28px;
       border-radius: 999px;
       color: #fff;
       text-transform: uppercase;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.7);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      border: 2px solid #fff;
-      text-shadow: 1px 1px 2px #000;
+      border: 3px solid #000;
+      box-shadow: 4px 4px 0px #000;
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
+      text-shadow: 2px 2px 0px #000;
     }
 
     .btn-bakugo {
-      background: linear-gradient(135deg, #dc2626, #ea580c);
+      background: linear-gradient(135deg, #dc2626, #f97316);
     }
 
     .btn-deku {
-      background: linear-gradient(135deg, #059669, #0284c7);
+      background: linear-gradient(135deg, #059669, #0ea5e9);
     }
 
     .side-bakugo:hover .hero-btn {
-      transform: translateY(-4px) scale(1.08);
-      box-shadow: 0 6px 22px rgba(239, 68, 68, 0.9);
+      transform: translateY(-5px) scale(1.1) rotate(-2deg);
+      box-shadow: 6px 6px 0px #000, 0 0 25px rgba(249, 115, 22, 0.9);
     }
 
     .side-deku:hover .hero-btn {
-      transform: translateY(-4px) scale(1.08);
-      box-shadow: 0 6px 22px rgba(16, 185, 129, 0.9);
+      transform: translateY(-5px) scale(1.1) rotate(2deg);
+      box-shadow: 6px 6px 0px #000, 0 0 25px rgba(16, 185, 129, 0.9);
     }
 
-    /* Story Card */
+    /* Comic Manga Story Box */
     .story-card {
-      margin: 18px 20px;
-      background: #1e293b;
-      border-radius: 18px;
-      padding: 22px 20px;
-      border-left: 6px solid #10b981;
-      border-right: 6px solid #ef4444;
-      box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
+      margin: 20px 20px 24px 20px;
+      background: #1f2937;
+      border-radius: 20px;
+      padding: 24px 22px;
+      border: 3px solid #000;
+      box-shadow: 5px 5px 0px #000;
+      position: relative;
+      text-align: left;
+    }
+
+    .story-card::before {
+      content: 'HERO ARCHIVE // REPORT';
+      position: absolute;
+      top: -14px;
+      left: 20px;
+      background: #facc15;
+      color: #000;
+      font-family: 'Bangers', cursive;
+      font-size: 1.15rem;
+      letter-spacing: 2px;
+      padding: 2px 14px;
+      border: 2px solid #000;
+      border-radius: 6px;
+      box-shadow: 2px 2px 0px #000;
     }
 
     .story-title {
       font-family: 'Bangers', cursive;
-      font-size: 1.6rem;
-      color: #facc15;
+      font-size: 1.8rem;
+      color: #38bdf8;
       letter-spacing: 1.5px;
+      margin-top: 6px;
       margin-bottom: 12px;
-      text-shadow: 1px 1px 0px #000;
+      text-shadow: 2px 2px 0px #000;
     }
 
     .story-text {
-      font-size: 1.15rem;
-      line-height: 1.7;
-      color: #f3f4f6;
+      font-size: 1.2rem;
+      line-height: 1.75;
+      color: #f9fafb;
       font-weight: 700;
     }
 
     .highlight-hero-deku {
       color: #34d399;
       font-weight: 900;
+      text-decoration: underline wavy #059669;
     }
 
     .highlight-hero-baku {
       color: #fb923c;
       font-weight: 900;
+      text-decoration: underline wavy #ea580c;
     }
 
     .highlight-saved {
       color: #facc15;
-      font-size: 1.25rem;
-      letter-spacing: 1px;
-      text-shadow: 0 0 10px rgba(250, 204, 21, 0.6);
+      font-family: 'Bangers', cursive;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 0px #000;
+      background: #78350f;
+      padding: 2px 8px;
+      border-radius: 6px;
+      display: inline-block;
     }
 
     /* Modal / Pop-up window for stats */
@@ -240,8 +332,8 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(10px);
       z-index: 100;
       justify-content: center;
       align-items: center;
@@ -260,14 +352,14 @@
 
     .modal-content {
       background: #111827;
-      border-radius: 24px;
+      border-radius: 26px;
       max-width: 500px;
       width: 100%;
-      border: 4px solid #fff;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.9);
+      border: 4px solid #000;
+      box-shadow: 8px 8px 0px #facc15, 12px 12px 0px #000, 0 25px 60px rgba(0,0,0,0.9);
       overflow: hidden;
       position: relative;
-      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       text-align: left;
       max-height: 92vh;
       display: flex;
@@ -275,52 +367,54 @@
     }
 
     @keyframes popIn {
-      from { transform: scale(0.85); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+      from { transform: scale(0.8) rotate(-2deg); opacity: 0; }
+      to { transform: scale(1) rotate(0deg); opacity: 1; }
     }
 
     .modal-header {
-      padding: 18px 22px;
+      padding: 20px 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       color: #fff;
+      border-bottom: 4px solid #000;
+      position: relative;
     }
 
     .modal-header.bakugo-theme {
-      background: linear-gradient(135deg, #b91c1c, #ea580c);
-      border-bottom: 3px solid #7f1d1d;
+      background: linear-gradient(135deg, #b91c1c 0%, #ea580c 100%);
     }
 
     .modal-header.deku-theme {
-      background: linear-gradient(135deg, #047857, #0284c7);
-      border-bottom: 3px solid #064e3b;
+      background: linear-gradient(135deg, #047857 0%, #0284c7 100%);
     }
 
     .modal-title {
       font-family: 'Bangers', cursive;
-      font-size: 2.3rem;
+      font-size: 2.5rem;
       letter-spacing: 2px;
-      text-shadow: 2px 2px 0px #000;
+      text-shadow: 3px 3px 0px #000;
       line-height: 1;
     }
 
     .modal-hero-alias {
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 1px;
       opacity: 0.95;
-      margin-top: 3px;
+      margin-top: 4px;
+      color: #fef08a;
+      text-shadow: 1px 1px 0px #000;
     }
 
     .close-btn {
-      background: rgba(0, 0, 0, 0.5);
-      border: 2px solid #fff;
+      background: #000;
+      border: 3px solid #fff;
       color: #fff;
-      font-size: 1.5rem;
-      width: 38px;
-      height: 38px;
+      font-size: 1.6rem;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       cursor: pointer;
       display: flex;
@@ -329,31 +423,33 @@
       font-weight: bold;
       transition: transform 0.2s ease, background 0.2s ease;
       flex-shrink: 0;
+      box-shadow: 3px 3px 0px rgba(0,0,0,0.5);
     }
 
     .close-btn:hover {
       transform: scale(1.15) rotate(90deg);
-      background: #000;
+      background: #ef4444;
+      border-color: #000;
     }
 
     .modal-body {
-      padding: 20px 22px 24px 22px;
+      padding: 22px 24px 26px 24px;
       overflow-y: auto;
     }
 
     .bio-profile-section {
       display: flex;
       justify-content: center;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
     .bio-avatar-frame {
-      width: 140px;
-      height: 140px;
+      width: 150px;
+      height: 150px;
       border-radius: 50%;
       overflow: hidden;
-      border: 4px solid #facc15;
-      box-shadow: 0 8px 22px rgba(0,0,0,0.6);
+      border: 5px solid #000;
+      box-shadow: 5px 5px 0px #000, 0 8px 25px rgba(0,0,0,0.6);
       background: #1f2937;
     }
 
@@ -368,55 +464,88 @@
       display: flex;
       align-items: center;
       background: #1f2937;
-      margin-bottom: 10px;
-      padding: 10px 14px;
-      border-radius: 12px;
-      border-left: 5px solid #facc15;
+      margin-bottom: 12px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      border: 2px solid #000;
+      box-shadow: 3px 3px 0px #000;
     }
 
     .stat-label {
-      width: 130px;
+      width: 140px;
       font-family: 'Bangers', cursive;
-      font-size: 1.2rem;
-      letter-spacing: 1px;
-      color: #9ca3af;
+      font-size: 1.3rem;
+      letter-spacing: 1.5px;
+      color: #facc15;
       text-transform: uppercase;
       flex-shrink: 0;
+      text-shadow: 1px 1px 0px #000;
     }
 
     .stat-value {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       font-weight: 800;
       color: #fff;
     }
 
     .quote-box {
-      margin-top: 14px;
-      padding: 12px 16px;
-      background: #374151;
-      border-radius: 12px;
+      margin-top: 16px;
+      padding: 14px 18px;
+      background: #0f172a;
+      border-radius: 14px;
       font-style: italic;
       color: #facc15;
       font-weight: 700;
       text-align: center;
-      border: 1px dashed rgba(250, 204, 21, 0.5);
-      font-size: 1rem;
+      border: 2px dashed #facc15;
+      box-shadow: 3px 3px 0px #000;
+      font-size: 1.05rem;
     }
 
     .footer {
-      padding: 12px 16px 22px;
-      font-size: 0.9rem;
+      padding: 14px 16px 20px;
+      font-size: 0.95rem;
       color: #9ca3af;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-weight: 700;
+      border-top: 3px solid #000;
+      background: #0d131f;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .plus-ultra-tag {
+      font-family: 'Bangers', cursive;
+      color: #facc15;
+      letter-spacing: 2px;
+      font-size: 1.15rem;
     }
   </style>
 </head>
 <body>
   <div class="container">
+    <!-- Hazard caution top stripe -->
+    <div class="mha-hazard-bar"></div>
+
     <div class="header">
-      <div class="badge">Diorama Exhibition</div>
-      <h1>Deku &amp; Bakugo</h1>
-      <div class="sub-cue">&#128070; Hover &amp; Click either hero to view their BIO!</div>
+      <!-- UA High School Badge -->
+      <div class="ua-emblem">
+        <span class="ua-text">U.A.</span>
+        <span class="ua-sub">HIGH SCHOOL // HERO ARCHIVE</span>
+      </div>
+      
+      <div class="manga-title-wrap">
+        <h1>DEKU &amp; BAKUGO</h1>
+      </div>
+      
+      <div>
+        <span class="plus-ultra-pill">&#9889; PLUS ULTRA! &#9889;</span>
+      </div>
+
+      <div>
+        <div class="sub-cue">&#128070; Tap or Hover either Hero to open their Bio!</div>
+      </div>
     </div>
 
     <div class="arena-section">
@@ -443,7 +572,7 @@
     </div>
 
     <div class="footer">
-      &#10024; Created with passion for the school diorama showcase &#10024;
+      <span>Diorama Exhibition</span> &bull; <span class="plus-ultra-tag">GO BEYOND! PLUS ULTRA!</span>
     </div>
   </div>
 
@@ -499,7 +628,7 @@
         food: "Spicy Food & Mountain Climbing Food",
         quote: "\"I'm gonna be the number one hero, and I'll surpass All Might!\"",
         theme: "bakugo-theme",
-        accent: "#ef4444",
+        accent: "#f97316",
         avatar: "bakugo_profile.png"
       },
       deku: {
@@ -537,8 +666,6 @@
 
       const avatarFrame = document.getElementById("avatarFrame");
       avatarFrame.style.borderColor = data.accent;
-
-      document.getElementById("modalContent").style.borderColor = data.accent;
 
       const modal = document.getElementById("heroModal");
       modal.classList.add("open");
