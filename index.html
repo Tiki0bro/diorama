@@ -386,7 +386,7 @@
       opacity: 1;
     }
 
-    /* Futuristic Arcade Style Hero Buttons */
+    /* Futuristic Arcade Style Hero Buttons with Mobile Tap Indicators */
     .hero-btn {
       position: relative;
       z-index: 12;
@@ -402,8 +402,32 @@
       transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease;
       text-shadow: 2px 2px 0px #000;
       display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1px;
+    }
+
+    .hero-btn-main {
+      display: flex;
       align-items: center;
       gap: 6px;
+      line-height: 1;
+    }
+
+    .hero-btn-hint {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      opacity: 0.95;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 1px 8px;
+      border-radius: 999px;
+      margin-top: 2px;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
     }
 
     .btn-bakugo {
@@ -414,14 +438,46 @@
       background: linear-gradient(135deg, #059669 0%, #0ea5e9 100%);
     }
 
-    .side-bakugo:hover .hero-btn {
+    .side-bakugo:hover .hero-btn,
+    .arena-frame.active-bakugo .side-bakugo .hero-btn {
       transform: translateY(-4px) scale(1.08) rotate(-1.5deg);
       box-shadow: 6px 6px 0px #000, 0 0 25px rgba(249, 115, 22, 0.9);
     }
 
-    .side-deku:hover .hero-btn {
+    .side-deku:hover .hero-btn,
+    .arena-frame.active-deku .side-deku .hero-btn {
       transform: translateY(-4px) scale(1.08) rotate(1.5deg);
       box-shadow: 6px 6px 0px #000, 0 0 25px rgba(16, 185, 129, 0.9);
+    }
+
+    /* Sound FX Toggle Pill */
+    .sound-toggle-btn {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1.5px solid rgba(250, 204, 21, 0.7);
+      color: #facc15;
+      font-family: 'Black Ops One', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      box-shadow: 0 0 12px rgba(250, 204, 21, 0.25);
+    }
+
+    .sound-toggle-btn:hover {
+      transform: scale(1.06);
+      background: #facc15;
+      color: #000;
+    }
+
+    .sound-toggle-btn.sound-on {
+      border-color: #10b981;
+      color: #34d399;
+      box-shadow: 0 0 14px rgba(16, 185, 129, 0.4);
     }
 
     /* =======================================================
@@ -964,13 +1020,33 @@
     }
 
     .lilah-intro-skip-hint {
-      display: block;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
       margin-top: 14px;
       font-size: 0.78rem;
       color: #94a3b8;
       letter-spacing: 1px;
       text-transform: uppercase;
       font-weight: 700;
+    }
+
+    .lilah-countdown-track {
+      width: 140px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 2px;
+    }
+
+    .lilah-countdown-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #f59e0b, #10b981);
+      border-radius: 999px;
+      transition: width 0.1s linear;
     }
 
     @media (max-width: 600px) {
@@ -1834,7 +1910,12 @@
       <button class="lilah-intro-btn" onclick="dismissLilahIntro()">
         View Backstory &#9654;
       </button>
-      <span class="lilah-intro-skip-hint">Click button above to view backstory</span>
+      <div class="lilah-intro-skip-hint">
+        <span id="lilahTimerText">Opening diorama in 3s &bull; Tap anywhere to enter</span>
+        <div class="lilah-countdown-track">
+          <div class="lilah-countdown-fill" id="lilahCountdownFill"></div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1859,7 +1940,13 @@
           <span class="ua-symbol">U.A.</span>
           <span class="ua-label">High School // Archive</span>
         </div>
-        <div class="plus-ultra-chip">&#9889; PLUS ULTRA</div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <button class="sound-toggle-btn sound-on" id="soundToggleBtn" onclick="toggleSoundFX()" aria-label="Toggle Sound Effects">
+            <span id="soundIcon">&#128266;</span>
+            <span id="soundLabel">SFX ON</span>
+          </button>
+          <div class="plus-ultra-chip">&#9889; PLUS ULTRA</div>
+        </div>
       </div>
       
       <!-- Cinematic VS Title Banner -->
@@ -1875,7 +1962,7 @@
       <div>
         <div class="battle-prompt-bar">
           <span class="pulse-dot"></span>
-          <span>SELECT A HERO TO VIEW STAT CARD</span>
+          <span>TAP OR HOVER EITHER HERO &bull; VIEW TCG CARD</span>
         </div>
       </div>
     </div>
@@ -1901,7 +1988,10 @@
              onmouseleave="clearActiveHeroSide()" 
              onclick="handleHeroClick('bakugo')" 
              title="Click to view Bakugo">
-          <div class="hero-btn btn-bakugo">&#128165; BAKUGO</div>
+          <div class="hero-btn btn-bakugo">
+            <div class="hero-btn-main">&#128165; BAKUGO</div>
+            <div class="hero-btn-hint">&#128070; TAP TO BATTLE</div>
+          </div>
         </div>
 
         <!-- Right Side: Deku -->
@@ -1910,7 +2000,10 @@
              onmouseleave="clearActiveHeroSide()" 
              onclick="handleHeroClick('deku')" 
              title="Click to view Deku">
-          <div class="hero-btn btn-deku">&#9889; DEKU</div>
+          <div class="hero-btn btn-deku">
+            <div class="hero-btn-main">&#9889; DEKU</div>
+            <div class="hero-btn-hint">&#128070; TAP TO BATTLE</div>
+          </div>
         </div>
       </div>
     </div>
@@ -2066,6 +2159,169 @@
       }
     };
 
+    // ==========================================================================
+    // Dynamic Web Audio API Sound Effects (Zero External Asset Latency)
+    // ==========================================================================
+    let soundEnabled = true;
+    let audioCtx = null;
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) {
+          audioCtx = new AudioContext();
+        }
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function toggleSoundFX() {
+      soundEnabled = !soundEnabled;
+      const btn = document.getElementById("soundToggleBtn");
+      const icon = document.getElementById("soundIcon");
+      const label = document.getElementById("soundLabel");
+
+      if (soundEnabled) {
+        getAudioContext();
+        if (btn) btn.className = "sound-toggle-btn sound-on";
+        if (icon) icon.innerHTML = "&#128266;";
+        if (label) label.textContent = "SFX ON";
+        playHeroSparkSound();
+      } else {
+        if (btn) btn.className = "sound-toggle-btn";
+        if (icon) icon.innerHTML = "&#128263;";
+        if (label) label.textContent = "SFX OFF";
+      }
+    }
+
+    // Bakugo Explosion Sound (Dense low pass noise burst + sub bass thud)
+    function playBakugoExplosionSound() {
+      if (!soundEnabled) return;
+      try {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+
+        // Sub bass thump
+        const osc = ctx.createOscillator();
+        const oscGain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(140, now);
+        osc.frequency.exponentialRampToValueAtTime(32, now + 0.35);
+        oscGain.gain.setValueAtTime(0.8, now);
+        oscGain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+        osc.connect(oscGain);
+        oscGain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.4);
+
+        // White noise explosion crackle
+        const bufferSize = ctx.sampleRate * 0.45;
+        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.12));
+        }
+        const noise = ctx.createBufferSource();
+        noise.buffer = buffer;
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(1100, now);
+        filter.frequency.exponentialRampToValueAtTime(180, now + 0.45);
+
+        const noiseGain = ctx.createGain();
+        noiseGain.gain.setValueAtTime(0.7, now);
+        noiseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.45);
+
+        noise.connect(filter);
+        filter.connect(noiseGain);
+        noiseGain.connect(ctx.destination);
+        noise.start(now);
+      } catch(e) {}
+    }
+
+    // Deku Smash / Lightning Impact Sound (High resonance laser sweep + impact punch)
+    function playDekuSmashSound() {
+      if (!soundEnabled) return;
+      try {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+
+        // Laser electric chime sweep (One For All full cowl activation)
+        const chime = ctx.createOscillator();
+        const chimeGain = ctx.createGain();
+        chime.type = 'sawtooth';
+        chime.frequency.setValueAtTime(880, now);
+        chime.frequency.exponentialRampToValueAtTime(220, now + 0.28);
+        chimeGain.gain.setValueAtTime(0.5, now);
+        chimeGain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+        chime.connect(chimeGain);
+        chimeGain.connect(ctx.destination);
+        chime.start(now);
+        chime.stop(now + 0.3);
+
+        // Punch impact thud
+        const osc = ctx.createOscillator();
+        const oscGain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(160, now);
+        osc.frequency.exponentialRampToValueAtTime(45, now + 0.3);
+        oscGain.gain.setValueAtTime(0.75, now);
+        oscGain.gain.exponentialRampToValueAtTime(0.01, now + 0.32);
+        osc.connect(oscGain);
+        oscGain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.32);
+      } catch(e) {}
+    }
+
+    // Card Reveal Foil Shimmer Sound (High twinkling ascending arpeggio)
+    function playCardShimmerSound() {
+      if (!soundEnabled) return;
+      try {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+        const freqs = [523.25, 659.25, 783.99, 1046.50, 1318.51];
+        freqs.forEach((f, idx) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(f, now + idx * 0.06);
+          gain.gain.setValueAtTime(0.18, now + idx * 0.06);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.06 + 0.22);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now + idx * 0.06);
+          osc.stop(now + idx * 0.06 + 0.25);
+        });
+      } catch(e) {}
+    }
+
+    function playHeroSparkSound() {
+      if (!soundEnabled) return;
+      try {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(440, now);
+        osc.frequency.exponentialRampToValueAtTime(880, now + 0.12);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.15);
+      } catch(e) {}
+    }
+
     let transitionTriggered = false;
 
     function handleHeroClick(heroKey) {
@@ -2074,13 +2330,30 @@
       const bakugoVideo = document.getElementById("eyecatchBakugoVideo");
       transitionTriggered = false;
 
+      // Initialize audio context on user interaction
+      getAudioContext();
+
       // Stop any existing playing videos
-      dekuVideo.pause();
-      bakugoVideo.pause();
-      dekuVideo.style.display = "none";
-      bakugoVideo.style.display = "none";
+      if (dekuVideo) { dekuVideo.pause(); dekuVideo.style.display = "none"; }
+      if (bakugoVideo) { bakugoVideo.pause(); bakugoVideo.style.display = "none"; }
+
+      // Point 3: Immediate mobile network watchdog fallback timer (450ms max buffer)
+      let bufferWatchdog = setTimeout(() => {
+        if (!transitionTriggered) {
+          transitionTriggered = true;
+          if (overlay) {
+            overlay.classList.add("fade-out");
+            setTimeout(() => {
+              overlay.classList.remove("active");
+              overlay.classList.remove("fade-out");
+            }, 250);
+          }
+          openHeroModal(heroKey);
+        }
+      }, 450);
 
       if (heroKey === 'deku') {
+        playDekuSmashSound();
         dekuVideo.style.display = "block";
         overlay.classList.remove("fade-out");
         overlay.classList.add("active");
@@ -2088,7 +2361,10 @@
         
         const playPromise = dekuVideo.play();
         if (playPromise !== undefined) {
-          playPromise.catch(error => {
+          playPromise.then(() => {
+            clearTimeout(bufferWatchdog); // Video started playing smoothly!
+          }).catch(error => {
+            clearTimeout(bufferWatchdog);
             overlay.classList.remove("active");
             openHeroModal('deku');
           });
@@ -2098,6 +2374,7 @@
         dekuVideo.ontimeupdate = function() {
           if (dekuVideo.currentTime >= 1.85 && !transitionTriggered) {
             transitionTriggered = true;
+            clearTimeout(bufferWatchdog);
             dekuVideo.pause();
             openHeroModal('deku');
             overlay.classList.add("fade-out");
@@ -2112,6 +2389,7 @@
         dekuVideo.onended = function() {
           if (!transitionTriggered) {
             transitionTriggered = true;
+            clearTimeout(bufferWatchdog);
             openHeroModal('deku');
             overlay.classList.add("fade-out");
             setTimeout(() => {
@@ -2122,6 +2400,7 @@
           }
         };
       } else if (heroKey === 'bakugo') {
+        playBakugoExplosionSound();
         bakugoVideo.style.display = "block";
         overlay.classList.remove("fade-out");
         overlay.classList.add("active");
@@ -2129,7 +2408,10 @@
 
         const playPromise = bakugoVideo.play();
         if (playPromise !== undefined) {
-          playPromise.catch(error => {
+          playPromise.then(() => {
+            clearTimeout(bufferWatchdog); // Video started playing smoothly!
+          }).catch(error => {
+            clearTimeout(bufferWatchdog);
             overlay.classList.remove("active");
             openHeroModal('bakugo');
           });
@@ -2139,6 +2421,7 @@
         bakugoVideo.ontimeupdate = function() {
           if (bakugoVideo.currentTime >= 2.22 && !transitionTriggered) {
             transitionTriggered = true;
+            clearTimeout(bufferWatchdog);
             bakugoVideo.pause();
             openHeroModal('bakugo');
             overlay.classList.add("fade-out");
@@ -2153,6 +2436,7 @@
         bakugoVideo.onended = function() {
           if (!transitionTriggered) {
             transitionTriggered = true;
+            clearTimeout(bufferWatchdog);
             openHeroModal('bakugo');
             overlay.classList.add("fade-out");
             setTimeout(() => {
@@ -2163,6 +2447,7 @@
           }
         };
       } else {
+        clearTimeout(bufferWatchdog);
         openHeroModal(heroKey);
       }
     }
@@ -2217,6 +2502,9 @@
 
       const modal = document.getElementById("heroModal");
       modal.classList.add("open");
+
+      // Play holographic card reveal shimmer sound
+      playCardShimmerSound();
     }
 
     function closeHeroModal() {
@@ -2254,6 +2542,9 @@
     let explosionTriggered = false;
     let lilahIntroDismissed = false;
 
+    let lilahAutoTimer = null;
+    let lilahInterval = null;
+
     function showLilahIntro() {
       const lilahOverlay = document.getElementById("lilahIntroOverlay");
       if (lilahOverlay) {
@@ -2262,12 +2553,42 @@
         void lilahOverlay.offsetWidth;
         lilahOverlay.classList.add("active");
       }
-      // Stays indefinitely until the user clicks "View Backstory"
+
+      // Point 1: 2.8s smooth auto-countdown so viewers don't get trapped by a gatekeeper
+      let durationMs = 2800;
+      let startTime = Date.now();
+      const fill = document.getElementById("lilahCountdownFill");
+      const text = document.getElementById("lilahTimerText");
+
+      if (lilahInterval) clearInterval(lilahInterval);
+      lilahInterval = setInterval(() => {
+        let elapsed = Date.now() - startTime;
+        let pct = Math.min(100, (elapsed / durationMs) * 100);
+        let remSec = Math.max(0, Math.ceil((durationMs - elapsed) / 1000));
+        if (fill) fill.style.width = pct + "%";
+        if (text) text.innerHTML = `Entering diorama in ${remSec}s &bull; Tap anywhere to enter`;
+        if (elapsed >= durationMs) {
+          clearInterval(lilahInterval);
+          dismissLilahIntro();
+        }
+      }, 50);
+
+      // If user taps the screen anywhere during greeting, enter immediately
+      if (lilahOverlay) {
+        lilahOverlay.onclick = (e) => {
+          if (e.target.closest('.lilah-intro-btn')) return; // handled by button
+          dismissLilahIntro();
+        };
+      }
     }
 
     function dismissLilahIntro() {
       if (lilahIntroDismissed) return;
       lilahIntroDismissed = true;
+      if (lilahInterval) clearInterval(lilahInterval);
+
+      // Play pleasant entry spark sound
+      playHeroSparkSound();
 
       const lilahOverlay = document.getElementById("lilahIntroOverlay");
       const mainContainer = document.querySelector(".container");
