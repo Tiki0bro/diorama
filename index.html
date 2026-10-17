@@ -49,116 +49,200 @@
       position: relative;
     }
 
+    /* =======================================================
+       CINEMATIC VS BATTLE SCREEN - MODERN MHA RESTYLE
+       ======================================================= */
+
     /* Top Caution / UA Tape Banner */
     .mha-hazard-bar {
-      height: 12px;
+      height: 10px;
       background: repeating-linear-gradient(
         -45deg,
         #f59e0b,
-        #f59e0b 16px,
-        #111827 16px,
-        #111827 32px
+        #f59e0b 14px,
+        #111827 14px,
+        #111827 28px
       );
       border-bottom: 2px solid #000;
     }
 
-    /* MHA Header Section */
+    /* Cinematic Header with Dark Carbon Mesh & Electric Lighting */
     .header {
-      background: linear-gradient(135deg, #b91c1c 0%, #d97706 40%, #059669 100%);
-      padding: 24px 20px 20px;
-      border-bottom: 4px solid #000;
+      background: 
+        radial-gradient(ellipse at 50% 0%, rgba(245, 158, 11, 0.18) 0%, transparent 70%),
+        linear-gradient(180deg, #182032 0%, #0d121d 100%);
+      padding: 22px 20px 18px;
+      border-bottom: 3px solid rgba(255, 255, 255, 0.12);
       position: relative;
+      overflow: hidden;
     }
 
-    .ua-emblem {
+    .header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(90deg, rgba(239, 68, 68, 0.12) 0%, transparent 40%, transparent 60%, rgba(16, 185, 129, 0.12) 100%);
+      pointer-events: none;
+    }
+
+    .header-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .ua-badge-pill {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      background: #1e3a8a;
-      border: 3px solid #facc15;
-      padding: 4px 18px;
-      border-radius: 10px;
-      box-shadow: 4px 4px 0px #000;
-      margin-bottom: 12px;
-      transform: rotate(-1.5deg);
+      gap: 6px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1.5px solid rgba(250, 204, 21, 0.7);
+      padding: 4px 12px;
+      border-radius: 999px;
+      box-shadow: 0 0 15px rgba(250, 204, 21, 0.25);
     }
 
-    .ua-text {
+    .ua-badge-pill .ua-symbol {
       font-family: 'Black Ops One', sans-serif;
-      font-size: 1.4rem;
-      letter-spacing: 3px;
-      color: #fff;
-      text-shadow: 2px 2px 0px #000;
-    }
-
-    .ua-sub {
-      font-family: 'Bangers', cursive;
-      font-size: 1.1rem;
       color: #facc15;
-      margin-left: 8px;
+      font-size: 0.95rem;
       letter-spacing: 1px;
     }
 
-    .manga-title-wrap {
-      position: relative;
-      display: inline-block;
-      margin-bottom: 6px;
-    }
-
-    h1 {
-      font-family: 'Bangers', cursive;
-      font-size: 3.5rem;
-      letter-spacing: 4px;
-      color: #ffffff;
-      text-shadow: 
-        4px 4px 0px #000, 
-        -2px -2px 0px #000, 
-        2px -2px 0px #000, 
-        -2px 2px 0px #000;
-      line-height: 1.05;
-      transform: skew(-3deg);
-    }
-
-    .plus-ultra-pill {
-      font-family: 'Bangers', cursive;
-      display: inline-block;
-      background: #ef4444;
-      color: #fff;
-      font-size: 1.1rem;
-      letter-spacing: 2px;
-      padding: 3px 18px;
-      border-radius: 999px;
-      border: 2px solid #000;
-      box-shadow: 3px 3px 0px #000;
-      margin-top: 4px;
-    }
-
-    .sub-cue {
-      margin-top: 14px;
-      font-size: 0.95rem;
-      color: #111827;
+    .ua-badge-pill .ua-label {
+      font-family: 'Nunito', sans-serif;
       font-weight: 800;
-      background: #facc15;
-      display: inline-block;
-      padding: 5px 18px;
-      border-radius: 20px;
-      border: 2px solid #000;
-      box-shadow: 3px 3px 0px #000;
+      color: #e2e8f0;
+      font-size: 0.72rem;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
 
-    /* Comic Arena Frame */
+    .plus-ultra-chip {
+      font-family: 'Black Ops One', sans-serif;
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: #fff;
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      padding: 3px 12px;
+      border-radius: 999px;
+      border: 1.5px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 14px rgba(239, 68, 68, 0.5);
+      text-transform: uppercase;
+    }
+
+    /* Dramatic VS Title Banner */
+    .vs-clash-header {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin: 4px 0 8px;
+    }
+
+    .hero-name-side {
+      font-family: 'Bangers', cursive;
+      font-size: 2.8rem;
+      letter-spacing: 2px;
+      line-height: 1;
+      text-transform: uppercase;
+      position: relative;
+    }
+
+    .hero-name-baku {
+      color: #f97316;
+      text-shadow: 
+        0 0 20px rgba(249, 115, 22, 0.6),
+        3px 3px 0px #000;
+      transform: skew(-6deg);
+    }
+
+    .hero-name-deku {
+      color: #10b981;
+      text-shadow: 
+        0 0 20px rgba(16, 185, 129, 0.6),
+        3px 3px 0px #000;
+      transform: skew(-6deg);
+    }
+
+    .vs-lightning-emblem {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #facc15, #f59e0b);
+      border: 3px solid #000;
+      transform: rotate(45deg);
+      box-shadow: 
+        0 0 25px rgba(250, 204, 21, 0.8),
+        3px 3px 0px #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .vs-lightning-emblem span {
+      transform: rotate(-45deg);
+      font-family: 'Black Ops One', sans-serif;
+      font-size: 1.15rem;
+      color: #000;
+      letter-spacing: 0;
+    }
+
+    /* Clean Battle Status Sub-Bar */
+    .battle-prompt-bar {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 5px 16px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: #cbd5e1;
+      text-transform: uppercase;
+      margin-top: 4px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    .battle-prompt-bar .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #facc15;
+      box-shadow: 0 0 8px #facc15;
+      animation: battlePulse 1.4s ease-in-out infinite;
+    }
+
+    @keyframes battlePulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: 0.6; }
+    }
+
+    /* =======================================================
+       BATTLE ARENA CLASH STAGE
+       ======================================================= */
     .arena-section {
-      padding: 24px 20px 12px 20px;
+      padding: 22px 20px 14px 20px;
     }
 
     .arena-frame {
       position: relative;
-      border-radius: 18px;
+      border-radius: 20px;
       overflow: hidden;
-      border: 4px solid #000;
-      box-shadow: 6px 6px 0px #000, 0 10px 25px rgba(0,0,0,0.6);
+      border: 3px solid #000;
+      box-shadow: 
+        0 0 0 1px rgba(255, 255, 255, 0.15),
+        8px 8px 0px #000, 
+        0 15px 35px rgba(0,0,0,0.7);
       background: #000;
       user-select: none;
     }
@@ -183,17 +267,15 @@
       z-index: 5;
     }
 
-    /* Left half clip for Bakugo animation */
+    /* Diagonal Split Cut - Dynamic Comic Shonen Slanted Clash */
     .anim-bakugo-layer {
-      clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+      clip-path: polygon(0 0, 53% 0, 47% 100%, 0 100%);
     }
 
-    /* Right half clip for Deku animation */
     .anim-deku-layer {
-      clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+      clip-path: polygon(53% 0, 100% 0, 100% 100%, 47% 100%);
     }
 
-    /* Show respective animation layer on hover or active touch */
     .arena-frame:has(.side-bakugo:hover) .anim-bakugo-layer,
     .arena-frame.active-bakugo .anim-bakugo-layer {
       opacity: 1;
@@ -202,6 +284,47 @@
     .arena-frame:has(.side-deku:hover) .anim-deku-layer,
     .arena-frame.active-deku .anim-deku-layer {
       opacity: 1;
+    }
+
+    /* Slanted Diagonal VS Center Clash Lightning Line */
+    .arena-vs-divider {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 4px;
+      background: linear-gradient(180deg, rgba(250, 204, 21, 0.9) 0%, rgba(255, 255, 255, 1) 50%, rgba(250, 204, 21, 0.9) 100%);
+      box-shadow: 
+        0 0 12px rgba(250, 204, 21, 0.9), 
+        0 0 24px rgba(255, 255, 255, 0.7);
+      transform: translateX(-50%) skew(-5deg);
+      pointer-events: none;
+      z-index: 15;
+    }
+
+    .arena-vs-badge {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-5deg);
+      width: 36px;
+      height: 36px;
+      background: #000;
+      border: 2px solid #facc15;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 16;
+      box-shadow: 0 0 15px rgba(250, 204, 21, 0.8), 2px 2px 0 #000;
+      pointer-events: none;
+    }
+
+    .arena-vs-badge span {
+      font-family: 'Black Ops One', sans-serif;
+      font-size: 0.95rem;
+      color: #facc15;
+      letter-spacing: 0;
     }
 
     /* Hotspot split halves */
@@ -215,7 +338,7 @@
       flex-direction: column;
       justify-content: flex-end;
       align-items: center;
-      padding-bottom: 20px;
+      padding-bottom: 18px;
       transition: all 0.3s ease;
       z-index: 10;
     }
@@ -233,7 +356,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at center, rgba(239, 68, 68, 0.45) 0%, rgba(249, 115, 22, 0.35) 100%);
+      background: radial-gradient(circle at 30% 60%, rgba(239, 68, 68, 0.5) 0%, rgba(249, 115, 22, 0.35) 60%, transparent 100%);
       opacity: 0;
       transition: opacity 0.3s ease;
       pointer-events: none;
@@ -244,7 +367,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at center, rgba(16, 185, 129, 0.45) 0%, rgba(14, 165, 233, 0.35) 100%);
+      background: radial-gradient(circle at 70% 60%, rgba(16, 185, 129, 0.5) 0%, rgba(14, 165, 233, 0.35) 60%, transparent 100%);
       opacity: 0;
       transition: opacity 0.3s ease;
       pointer-events: none;
@@ -261,122 +384,154 @@
       opacity: 1;
     }
 
-    /* Comic Action Hero Badges */
+    /* Futuristic Arcade Style Hero Buttons */
     .hero-btn {
       position: relative;
       z-index: 12;
       font-family: 'Bangers', cursive;
-      font-size: 1.5rem;
+      font-size: 1.45rem;
       letter-spacing: 2px;
-      padding: 9px 28px;
+      padding: 9px 24px;
       border-radius: 999px;
       color: #fff;
       text-transform: uppercase;
       border: 3px solid #000;
       box-shadow: 4px 4px 0px #000;
-      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
+      transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease;
       text-shadow: 2px 2px 0px #000;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .btn-bakugo {
-      background: linear-gradient(135deg, #dc2626, #f97316);
+      background: linear-gradient(135deg, #dc2626 0%, #f97316 100%);
     }
 
     .btn-deku {
-      background: linear-gradient(135deg, #059669, #0ea5e9);
+      background: linear-gradient(135deg, #059669 0%, #0ea5e9 100%);
     }
 
     .side-bakugo:hover .hero-btn {
-      transform: translateY(-5px) scale(1.1) rotate(-2deg);
+      transform: translateY(-4px) scale(1.08) rotate(-1.5deg);
       box-shadow: 6px 6px 0px #000, 0 0 25px rgba(249, 115, 22, 0.9);
     }
 
     .side-deku:hover .hero-btn {
-      transform: translateY(-5px) scale(1.1) rotate(2deg);
+      transform: translateY(-4px) scale(1.08) rotate(1.5deg);
       box-shadow: 6px 6px 0px #000, 0 0 25px rgba(16, 185, 129, 0.9);
     }
 
-    /* Comic Manga Story Box */
+    /* =======================================================
+       UA HERO ARCHIVE DOSSIER REPORT (STORY SECTION)
+       ======================================================= */
     .story-card {
-      margin: 20px 20px 24px 20px;
-      background: #1f2937;
+      margin: 18px 20px 24px 20px;
+      background: 
+        radial-gradient(ellipse at 50% 0%, rgba(30, 58, 138, 0.2) 0%, transparent 60%),
+        linear-gradient(180deg, #161e2e 0%, #0f172a 100%);
       border-radius: 20px;
-      padding: 24px 22px;
+      padding: 24px 22px 20px;
       border: 3px solid #000;
-      box-shadow: 5px 5px 0px #000;
+      box-shadow: 
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        6px 6px 0px #000,
+        0 15px 30px rgba(0,0,0,0.5);
       position: relative;
       text-align: left;
     }
 
     .story-card::before {
-      content: 'HERO ARCHIVE // REPORT';
+      content: 'CONFIDENTIAL // HERO DOSSIER';
       position: absolute;
-      top: -14px;
+      top: -13px;
       left: 20px;
       background: #facc15;
       color: #000;
-      font-family: 'Bangers', cursive;
-      font-size: 1.15rem;
-      letter-spacing: 2px;
-      padding: 2px 14px;
+      font-family: 'Black Ops One', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 1.5px;
+      padding: 3px 12px;
       border: 2px solid #000;
       border-radius: 6px;
       box-shadow: 2px 2px 0px #000;
     }
 
+    .story-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      padding-bottom: 8px;
+    }
+
     .story-title {
       font-family: 'Bangers', cursive;
-      font-size: 1.8rem;
+      font-size: 1.85rem;
       color: #38bdf8;
       letter-spacing: 1.5px;
-      margin-top: 6px;
-      margin-bottom: 12px;
       text-shadow: 2px 2px 0px #000;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .story-file-id {
+      font-family: monospace;
+      font-size: 0.72rem;
+      color: #94a3b8;
+      font-weight: 700;
+      letter-spacing: 1px;
     }
 
     .story-text {
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       line-height: 1.75;
-      color: #f9fafb;
+      color: #f1f5f9;
       font-weight: 700;
     }
 
     .highlight-hero-deku {
       color: #34d399;
       font-weight: 900;
-      text-decoration: underline wavy #059669;
+      padding: 0 4px;
+      border-bottom: 2px solid #10b981;
     }
 
     .highlight-hero-baku {
       color: #fb923c;
       font-weight: 900;
-      text-decoration: underline wavy #ea580c;
+      padding: 0 4px;
+      border-bottom: 2px solid #f97316;
     }
 
     .highlight-saved {
       color: #facc15;
       font-family: 'Bangers', cursive;
-      font-size: 1.5rem;
+      font-size: 1.45rem;
       letter-spacing: 2px;
       text-shadow: 2px 2px 0px #000;
       background: #78350f;
-      padding: 2px 8px;
+      padding: 1px 8px;
       border-radius: 6px;
       display: inline-block;
+      border: 1px solid #facc15;
     }
 
     /* Daughter's Hero Review Section on Main Page */
     .daughter-hero-reviews {
       margin-top: 18px;
       padding-top: 16px;
-      border-top: 2px dashed rgba(255, 255, 255, 0.2);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .daughter-main-badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: linear-gradient(135deg, #ec4899, #8b5cf6);
+      background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
       color: #fff;
       font-family: 'Bangers', cursive;
       font-size: 1.15rem;
@@ -404,18 +559,19 @@
     .daughter-hero-card {
       border-radius: 14px;
       padding: 12px 14px;
-      border: 3px solid #000;
+      border: 2px solid #000;
       box-shadow: 3px 3px 0px #000;
-      background: #111827;
+      background: rgba(11, 15, 25, 0.85);
       text-align: left;
+      position: relative;
     }
 
     .daughter-hero-card.deku-card {
-      border-left: 6px solid #10b981;
+      border-left: 5px solid #10b981;
     }
 
     .daughter-hero-card.baku-card {
-      border-left: 6px solid #f97316;
+      border-left: 5px solid #f97316;
     }
 
     .daughter-hero-header {
@@ -437,9 +593,9 @@
     }
 
     .daughter-hero-quote {
-      font-size: 1rem;
+      font-size: 0.98rem;
       line-height: 1.5;
-      color: #fdf2f8;
+      color: #f8fafc;
       font-weight: 700;
       font-style: italic;
     }
@@ -1101,19 +1257,27 @@
         letter-spacing: 0.5px;
       }
 
-      h1 {
-        font-size: 2.5rem;
-        letter-spacing: 2px;
+      .vs-clash-header {
+        gap: 8px;
+        margin: 2px 0 6px;
       }
 
-      .plus-ultra-pill {
+      .hero-name-side {
+        font-size: 2rem;
+        letter-spacing: 1.5px;
+      }
+
+      .vs-lightning-emblem {
+        width: 34px;
+        height: 34px;
+      }
+
+      .vs-lightning-emblem span {
         font-size: 0.95rem;
-        padding: 2px 14px;
       }
 
-      .sub-cue {
-        margin-top: 10px;
-        font-size: 0.82rem;
+      .battle-prompt-bar {
+        font-size: 0.72rem;
         padding: 4px 12px;
       }
 
@@ -1145,9 +1309,9 @@
       }
 
       .story-card::before {
-        font-size: 0.95rem;
-        padding: 1px 10px;
-        top: -12px;
+        font-size: 0.78rem;
+        padding: 2px 8px;
+        top: -11px;
         left: 14px;
       }
 
@@ -1347,22 +1511,30 @@
     <div class="mha-hazard-bar"></div>
 
     <div class="header">
-      <!-- UA High School Badge -->
-      <div class="ua-emblem">
-        <span class="ua-text">U.A.</span>
-        <span class="ua-sub">HIGH SCHOOL // HERO ARCHIVE</span>
+      <!-- Top Utility & Badge Strip -->
+      <div class="header-top-row">
+        <div class="ua-badge-pill">
+          <span class="ua-symbol">U.A.</span>
+          <span class="ua-label">High School // Archive</span>
+        </div>
+        <div class="plus-ultra-chip">&#9889; PLUS ULTRA</div>
       </div>
       
-      <div class="manga-title-wrap">
-        <h1>DEKU &amp; BAKUGO</h1>
-      </div>
-      
-      <div>
-        <span class="plus-ultra-pill">&#9889; PLUS ULTRA! &#9889;</span>
+      <!-- Cinematic VS Title Banner -->
+      <div class="vs-clash-header">
+        <div class="hero-name-side hero-name-baku">BAKUGO</div>
+        <div class="vs-lightning-emblem">
+          <span>VS</span>
+        </div>
+        <div class="hero-name-side hero-name-deku">DEKU</div>
       </div>
 
+      <!-- Battle Status Callout -->
       <div>
-        <div class="sub-cue">&#128070; Tap or Hover either Hero to open their Bio!</div>
+        <div class="battle-prompt-bar">
+          <span class="pulse-dot"></span>
+          <span>SELECT A HERO TO VIEW STAT CARD</span>
+        </div>
       </div>
     </div>
 
@@ -1375,13 +1547,19 @@
         <img src="deku_v_bakugo_anim.gif" alt="Bakugo Active Animation" class="anim-split-layer anim-bakugo-layer" />
         <img src="deku_v_bakugo_anim.gif" alt="Deku Active Animation" class="anim-split-layer anim-deku-layer" />
 
+        <!-- Slanted Center Lightning Clash Line -->
+        <div class="arena-vs-divider"></div>
+        <div class="arena-vs-badge">
+          <span>VS</span>
+        </div>
+
         <!-- Left Side: Bakugo -->
         <div class="half-side side-bakugo" 
              onmouseenter="setActiveHeroSide('bakugo')" 
              onmouseleave="clearActiveHeroSide()" 
              onclick="handleHeroClick('bakugo')" 
              title="Click to view Bakugo">
-          <div class="hero-btn btn-bakugo">&#128165; Bakugo</div>
+          <div class="hero-btn btn-bakugo">&#128165; BAKUGO</div>
         </div>
 
         <!-- Right Side: Deku -->
@@ -1390,15 +1568,18 @@
              onmouseleave="clearActiveHeroSide()" 
              onclick="handleHeroClick('deku')" 
              title="Click to view Deku">
-          <div class="hero-btn btn-deku">&#9889; Deku</div>
+          <div class="hero-btn btn-deku">&#9889; DEKU</div>
         </div>
       </div>
     </div>
 
     <div class="story-card">
-      <div class="story-title">&#9733; The Story of Two Heroes &#9733;</div>
+      <div class="story-header-row">
+        <div class="story-title">&#9733; The Story of Two Heroes</div>
+        <div class="story-file-id">UA-ARCHIVE // CL-1A</div>
+      </div>
       <p class="story-text">
-        These young men named <span class="highlight-hero-deku">Deku</span> and <span class="highlight-hero-baku">Bakugo</span> have been enemies for over 11 years. After enrolling at UA High School together, they grew more and more comfortable with each other, and eventually they grew so close and <span class="highlight-saved">SAVED</span> the world.
+        These young men named <span class="highlight-hero-deku">Deku</span> and <span class="highlight-hero-baku">Bakugo</span> have been rivals for over 11 years. After enrolling at UA High School together, they grew through fierce battles, forged an unbreakable bond, and ultimately <span class="highlight-saved">SAVED</span> the world.
       </p>
 
       <!-- Lilah Rose Greening's Commentary Highlight Box -->
