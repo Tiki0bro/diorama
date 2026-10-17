@@ -170,6 +170,40 @@
       transition: filter 0.3s ease;
     }
 
+    /* Animated GIF Layers for Dynamic Hover on each side */
+    .anim-split-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.25s ease-in-out;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    /* Left half clip for Bakugo animation */
+    .anim-bakugo-layer {
+      clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+    }
+
+    /* Right half clip for Deku animation */
+    .anim-deku-layer {
+      clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+    }
+
+    /* Show respective animation layer on hover or active touch */
+    .arena-frame:has(.side-bakugo:hover) .anim-bakugo-layer,
+    .arena-frame.active-bakugo .anim-bakugo-layer {
+      opacity: 1;
+    }
+
+    .arena-frame:has(.side-deku:hover) .anim-deku-layer,
+    .arena-frame.active-deku .anim-deku-layer {
+      opacity: 1;
+    }
+
     /* Hotspot split halves */
     .half-side {
       position: absolute;
@@ -199,7 +233,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at center, rgba(239, 68, 68, 0.5) 0%, rgba(249, 115, 22, 0.4) 100%);
+      background: radial-gradient(circle at center, rgba(239, 68, 68, 0.45) 0%, rgba(249, 115, 22, 0.35) 100%);
       opacity: 0;
       transition: opacity 0.3s ease;
       pointer-events: none;
@@ -210,18 +244,20 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at center, rgba(16, 185, 129, 0.5) 0%, rgba(14, 165, 233, 0.4) 100%);
+      background: radial-gradient(circle at center, rgba(16, 185, 129, 0.45) 0%, rgba(14, 165, 233, 0.35) 100%);
       opacity: 0;
       transition: opacity 0.3s ease;
       pointer-events: none;
       box-shadow: inset 0 0 45px rgba(16, 185, 129, 0.95);
     }
 
-    .side-bakugo:hover::before {
+    .side-bakugo:hover::before,
+    .arena-frame.active-bakugo .side-bakugo::before {
       opacity: 1;
     }
 
-    .side-deku:hover::before {
+    .side-deku:hover::before,
+    .arena-frame.active-deku .side-deku::before {
       opacity: 1;
     }
 
@@ -1031,13 +1067,267 @@
       letter-spacing: 2px;
       font-size: 1.15rem;
     }
+
+    /* ==========================================================================
+       Cellphone Friendly & Small Screen Optimizations
+       ========================================================================== */
+    @media (max-width: 640px) {
+      body {
+        padding: 10px 8px;
+      }
+
+      .container {
+        border-radius: 20px;
+        border-width: 3px;
+        box-shadow: 6px 6px 0px #f59e0b, 9px 9px 0px #000, 0 15px 35px rgba(0,0,0,0.8);
+      }
+
+      .header {
+        padding: 18px 12px 16px;
+      }
+
+      .ua-emblem {
+        padding: 3px 12px;
+        margin-bottom: 8px;
+      }
+
+      .ua-text {
+        font-size: 1.15rem;
+        letter-spacing: 2px;
+      }
+
+      .ua-sub {
+        font-size: 0.95rem;
+        letter-spacing: 0.5px;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        letter-spacing: 2px;
+      }
+
+      .plus-ultra-pill {
+        font-size: 0.95rem;
+        padding: 2px 14px;
+      }
+
+      .sub-cue {
+        margin-top: 10px;
+        font-size: 0.82rem;
+        padding: 4px 12px;
+      }
+
+      .arena-section {
+        padding: 14px 10px 8px 10px;
+      }
+
+      .arena-frame {
+        border-width: 3px;
+        border-radius: 14px;
+        box-shadow: 4px 4px 0px #000;
+      }
+
+      .hero-btn {
+        font-size: 1.15rem;
+        padding: 7px 18px;
+        border-width: 2.5px;
+        box-shadow: 3px 3px 0px #000;
+      }
+
+      .half-side {
+        padding-bottom: 12px;
+      }
+
+      .story-card {
+        margin: 14px 10px 18px 10px;
+        padding: 18px 14px;
+        border-radius: 16px;
+      }
+
+      .story-card::before {
+        font-size: 0.95rem;
+        padding: 1px 10px;
+        top: -12px;
+        left: 14px;
+      }
+
+      .story-title {
+        font-size: 1.45rem;
+        margin-bottom: 8px;
+      }
+
+      .story-text {
+        font-size: 1.05rem;
+        line-height: 1.6;
+      }
+
+      .daughter-main-badge {
+        font-size: 0.98rem;
+        padding: 3px 11px;
+      }
+
+      .daughter-hero-card {
+        padding: 10px 12px;
+      }
+
+      .daughter-hero-header {
+        font-size: 1.1rem;
+      }
+
+      .daughter-hero-quote {
+        font-size: 0.92rem;
+      }
+
+      /* Cellphone Friendly Card Modal */
+      .modal-backdrop {
+        padding: 8px 6px;
+      }
+
+      .modal-content {
+        max-width: 100%;
+        height: auto;
+        min-height: 85vh;
+        max-height: 96vh;
+        border-radius: 16px;
+        border-width: 3px;
+        box-shadow: 0 0 0 1px #333, 6px 6px 0px #000, 0 15px 40px rgba(0,0,0,0.9);
+      }
+
+      .ua-card-frame {
+        border-radius: 12px;
+      }
+
+      .ua-top-layer {
+        padding: 8px 10px 4px;
+      }
+
+      .ua-cost-orb {
+        width: 36px;
+        height: 36px;
+        font-size: 1.35rem;
+        border-width: 2px;
+      }
+
+      .ua-action-badge {
+        font-size: 0.62rem;
+        padding: 1px 5px;
+      }
+
+      .ua-english-name {
+        font-size: 1.55rem;
+        letter-spacing: 1px;
+      }
+
+      .ua-english-alias-tag {
+        font-size: 0.85rem;
+        letter-spacing: 0.5px;
+      }
+
+      .close-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 1.3rem;
+      }
+
+      .ua-middle-strip {
+        padding: 0 8px;
+        margin-bottom: 4px;
+      }
+
+      .ua-raid-banner {
+        font-size: 0.72rem;
+        padding: 2px 12px 2px 8px;
+        letter-spacing: 1px;
+      }
+
+      .ua-trait-text {
+        font-size: 0.78rem;
+        letter-spacing: 0.5px;
+      }
+
+      .ua-bottom-deck {
+        padding: 6px 8px 5px;
+        gap: 4px;
+      }
+
+      .ua-stat-row {
+        gap: 4px;
+      }
+
+      .ua-stat-box {
+        padding: 3px 5px;
+      }
+
+      .ua-stat-lbl {
+        font-size: 0.68rem;
+      }
+
+      .ua-stat-val {
+        font-size: 0.72rem;
+        line-height: 1.15;
+      }
+
+      .ua-effect-box {
+        padding: 4px 6px;
+      }
+
+      .ua-effect-badge {
+        font-size: 0.6rem;
+        padding: 1px 4px;
+      }
+
+      .ua-effect-text {
+        font-size: 0.72rem;
+        line-height: 1.25;
+      }
+
+      .ua-lilah-deck {
+        padding: 4px 6px;
+      }
+
+      .ua-lilah-badge {
+        font-size: 0.62rem;
+        padding: 1px 5px;
+      }
+
+      .ua-lilah-text {
+        font-size: 0.75rem;
+        line-height: 1.25;
+      }
+
+      .ua-bp-display {
+        font-size: 1.35rem;
+      }
+
+      .ua-bp-display span {
+        font-size: 0.75rem;
+      }
+
+      .ua-collector-serial {
+        font-size: 0.58rem;
+      }
+
+      .ua-orb-energy {
+        width: 18px;
+        height: 18px;
+      }
+
+      .intro-skip-btn {
+        top: 14px;
+        right: 14px;
+        padding: 6px 14px;
+        font-size: 0.95rem;
+      }
+    }
   </style>
 </head>
 <body>
   <!-- Page Opening Animation Intro Overlay -->
   <div class="intro-overlay" id="introOverlay" onclick="dismissIntroAnimation()">
     <div class="intro-container">
-      <img src="bakugo_deku_intro_crisp.gif" alt="Bakugo and Deku Animation" class="intro-anim-media" id="introAnimImg" />
+      <video class="intro-anim-media" id="introAnimVideo" autoplay muted playsinline preload="auto">
+        <source src="intro_animation.mp4" type="video/mp4">
+      </video>
       <button class="intro-skip-btn" onclick="event.stopPropagation(); dismissIntroAnimation();" aria-label="Skip Animation">SKIP &rarr;</button>
     </div>
   </div>
@@ -1077,16 +1367,29 @@
     </div>
 
     <div class="arena-section">
-      <div class="arena-frame">
+      <div class="arena-frame" id="arenaFrame">
+        <!-- Base High-Res Static Canvas -->
         <img src="deku_bakugo.jpg" alt="Bakugo vs Deku" class="base-img" />
         
+        <!-- Animated Layers for Hover / Selection Action -->
+        <img src="deku_v_bakugo_anim.gif" alt="Bakugo Active Animation" class="anim-split-layer anim-bakugo-layer" />
+        <img src="deku_v_bakugo_anim.gif" alt="Deku Active Animation" class="anim-split-layer anim-deku-layer" />
+
         <!-- Left Side: Bakugo -->
-        <div class="half-side side-bakugo" onclick="handleHeroClick('bakugo')" title="Click to view Bakugo">
+        <div class="half-side side-bakugo" 
+             onmouseenter="setActiveHeroSide('bakugo')" 
+             onmouseleave="clearActiveHeroSide()" 
+             onclick="handleHeroClick('bakugo')" 
+             title="Click to view Bakugo">
           <div class="hero-btn btn-bakugo">&#128165; Bakugo</div>
         </div>
 
         <!-- Right Side: Deku -->
-        <div class="half-side side-deku" onclick="handleHeroClick('deku')" title="Click to view Deku">
+        <div class="half-side side-deku" 
+             onmouseenter="setActiveHeroSide('deku')" 
+             onmouseleave="clearActiveHeroSide()" 
+             onclick="handleHeroClick('deku')" 
+             title="Click to view Deku">
           <div class="hero-btn btn-deku">&#9889; Deku</div>
         </div>
       </div>
@@ -1403,12 +1706,36 @@
       }
     }
 
+    // Arena Split Hover / Selection Animation Controls
+    function setActiveHeroSide(heroKey) {
+      const arena = document.getElementById("arenaFrame");
+      if (!arena) return;
+      if (heroKey === 'bakugo') {
+        arena.classList.add("active-bakugo");
+        arena.classList.remove("active-deku");
+      } else if (heroKey === 'deku') {
+        arena.classList.add("active-deku");
+        arena.classList.remove("active-bakugo");
+      }
+    }
+
+    function clearActiveHeroSide() {
+      const arena = document.getElementById("arenaFrame");
+      if (!arena) return;
+      arena.classList.remove("active-bakugo");
+      arena.classList.remove("active-deku");
+    }
+
     // Intro Animation Control
     let introDismissed = false;
     function dismissIntroAnimation() {
       if (introDismissed) return;
       introDismissed = true;
       const intro = document.getElementById("introOverlay");
+      const introVid = document.getElementById("introAnimVideo");
+      if (introVid) {
+        try { introVid.pause(); } catch(e) {}
+      }
       if (intro) {
         intro.classList.add("fade-out");
         setTimeout(() => {
@@ -1417,11 +1744,31 @@
       }
     }
 
-    // Auto-dismiss after animation plays 1 full cycle (~4.2 seconds for full 40 frames)
+    // Auto play intro MP4 and dismiss cleanly when completed
     window.addEventListener("DOMContentLoaded", () => {
-      setTimeout(() => {
-        dismissIntroAnimation();
-      }, 4200);
+      const introVid = document.getElementById("introAnimVideo");
+      if (introVid) {
+        introVid.muted = true;
+        introVid.defaultMuted = true;
+        
+        // Start playback
+        const startPlay = () => {
+          introVid.play().catch(e => {
+            console.log("Autoplay waiting for user gesture:", e);
+          });
+        };
+        startPlay();
+
+        // When video ends, smoothly fade into showcase
+        introVid.addEventListener("ended", () => {
+          dismissIntroAnimation();
+        });
+
+        // If user touches or clicks anywhere on intro screen, dismiss
+        document.getElementById("introOverlay").addEventListener("click", () => {
+          dismissIntroAnimation();
+        });
+      }
     });
 
     document.addEventListener("keydown", function(e) {
