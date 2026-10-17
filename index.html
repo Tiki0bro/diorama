@@ -840,6 +840,17 @@
   </style>
 </head>
 <body>
+  <!-- Page Opening Animation Intro Overlay -->
+  <div class="intro-overlay" id="introOverlay" onclick="dismissIntroAnimation()">
+    <div class="intro-container">
+      <picture>
+        <source srcset="bakugo_deku_intro.webp" type="image/webp">
+        <img src="bakugo_deku_intro.gif" alt="Bakugo and Deku Animation" class="intro-anim-media" id="introAnimImg" />
+      </picture>
+      <button class="intro-skip-btn" onclick="event.stopPropagation(); dismissIntroAnimation();" aria-label="Skip Animation">SKIP &rarr;</button>
+    </div>
+  </div>
+
   <!-- Eyecatch Video Transition Container -->
   <div class="eyecatch-overlay" id="eyecatchOverlay">
     <video class="eyecatch-video" id="eyecatchVideo" playsinline preload="auto">
@@ -1108,12 +1119,34 @@
       }
     }
 
+    // Intro Animation Control
+    let introDismissed = false;
+    function dismissIntroAnimation() {
+      if (introDismissed) return;
+      introDismissed = true;
+      const intro = document.getElementById("introOverlay");
+      if (intro) {
+        intro.classList.add("fade-out");
+        setTimeout(() => {
+          intro.style.display = "none";
+        }, 600);
+      }
+    }
+
+    // Auto-dismiss after animation plays (~4.2 seconds for full 40-frame sequence)
+    window.addEventListener("DOMContentLoaded", () => {
+      setTimeout(() => {
+        dismissIntroAnimation();
+      }, 4200);
+    });
+
     document.addEventListener("keydown", function(e) {
       if (e.key === "Escape") {
+        dismissIntroAnimation();
         closeHeroModal();
         const overlay = document.getElementById("eyecatchOverlay");
         const video = document.getElementById("eyecatchVideo");
-        if (overlay.classList.contains("active")) {
+        if (overlay && overlay.classList.contains("active")) {
           video.pause();
           overlay.classList.remove("active");
         }
