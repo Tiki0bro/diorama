@@ -465,16 +465,18 @@
       justify-content: center;
       align-items: center;
       background: #000;
+      padding: 20px;
     }
 
     .intro-anim-media {
-      max-width: 100%;
-      max-height: 100%;
+      max-width: 90vw;
+      max-height: 85vh;
       width: auto;
       height: auto;
       object-fit: contain;
-      box-shadow: 0 0 50px rgba(245, 158, 11, 0.35);
-      border-radius: 8px;
+      box-shadow: 0 0 50px rgba(245, 158, 11, 0.45);
+      border-radius: 12px;
+      border: 3px solid rgba(250, 204, 21, 0.3);
     }
 
     .intro-skip-btn {
@@ -1042,21 +1044,19 @@
   <!-- Page Opening Animation Intro Overlay -->
   <div class="intro-overlay" id="introOverlay" onclick="dismissIntroAnimation()">
     <div class="intro-container">
-      <video class="intro-anim-media" id="introAnimVideo" autoplay muted playsinline preload="auto">
-        <source src="bakugo_deku_intro.mp4" type="video/mp4">
-        <!-- Fallback image if video is not supported -->
-        <img src="bakugo_deku_intro.gif" alt="Bakugo and Deku Animation" class="intro-anim-media" />
-      </video>
+      <img src="bakugo_deku_intro_crisp.gif" alt="Bakugo and Deku Animation" class="intro-anim-media" id="introAnimImg" />
       <button class="intro-skip-btn" onclick="event.stopPropagation(); dismissIntroAnimation();" aria-label="Skip Animation">SKIP &rarr;</button>
     </div>
   </div>
 
-  <!-- Eyecatch Transition Container (Deku video & Bakugo animated GIF) -->
+  <!-- Eyecatch Transition Container (Deku & Bakugo cinematic videos) -->
   <div class="eyecatch-overlay" id="eyecatchOverlay">
-    <video class="eyecatch-video" id="eyecatchVideo" playsinline preload="auto" style="display: none;">
+    <video class="eyecatch-video" id="eyecatchDekuVideo" playsinline preload="auto" style="display: none;">
       <source src="deku_eyecatch.mp4" type="video/mp4">
     </video>
-    <img class="eyecatch-img" id="eyecatchBakugoImg" alt="Bakugo Eyecatch" style="display: none;" />
+    <video class="eyecatch-video" id="eyecatchBakugoVideo" playsinline preload="auto" style="display: none;">
+      <source src="bakugo_eyecatch.mp4" type="video/mp4">
+    </video>
   </div>
 
   <div class="container">
@@ -1250,27 +1250,26 @@
     };
 
     let transitionTriggered = false;
-    let bakugoAnimTimer = null;
 
     function handleHeroClick(heroKey) {
       const overlay = document.getElementById("eyecatchOverlay");
-      const video = document.getElementById("eyecatchVideo");
-      const bakugoImg = document.getElementById("eyecatchBakugoImg");
+      const dekuVideo = document.getElementById("eyecatchDekuVideo");
+      const bakugoVideo = document.getElementById("eyecatchBakugoVideo");
       transitionTriggered = false;
 
-      if (bakugoAnimTimer) {
-        clearTimeout(bakugoAnimTimer);
-        bakugoAnimTimer = null;
-      }
+      // Stop any existing playing videos
+      dekuVideo.pause();
+      bakugoVideo.pause();
+      dekuVideo.style.display = "none";
+      bakugoVideo.style.display = "none";
 
       if (heroKey === 'deku') {
-        bakugoImg.style.display = "none";
-        video.style.display = "block";
+        dekuVideo.style.display = "block";
         overlay.classList.remove("fade-out");
         overlay.classList.add("active");
-        video.currentTime = 0;
+        dekuVideo.currentTime = 0;
         
-        const playPromise = video.play();
+        const playPromise = dekuVideo.play();
         if (playPromise !== undefined) {
           playPromise.catch(error => {
             overlay.classList.remove("active");
@@ -1278,26 +1277,22 @@
           });
         }
 
-        // The video file itself is trimmed right at Deku's punch zoom impact
-        video.ontimeupdate = function() {
-          if (video.currentTime >= 1.85 && !transitionTriggered) {
+        // Deku punch zoom impact transition
+        dekuVideo.ontimeupdate = function() {
+          if (dekuVideo.currentTime >= 1.85 && !transitionTriggered) {
             transitionTriggered = true;
-            video.pause();
-            
-            // Open Deku's stat card
+            dekuVideo.pause();
             openHeroModal('deku');
-            
-            // Smoothly dissolve video overlay
             overlay.classList.add("fade-out");
             setTimeout(() => {
               overlay.classList.remove("active");
               overlay.classList.remove("fade-out");
-              video.style.display = "none";
+              dekuVideo.style.display = "none";
             }, 250);
           }
         };
 
-        video.onended = function() {
+        dekuVideo.onended = function() {
           if (!transitionTriggered) {
             transitionTriggered = true;
             openHeroModal('deku');
@@ -1305,41 +1300,51 @@
             setTimeout(() => {
               overlay.classList.remove("active");
               overlay.classList.remove("fade-out");
-              video.style.display = "none";
+              dekuVideo.style.display = "none";
             }, 250);
           }
         };
       } else if (heroKey === 'bakugo') {
-        video.pause();
-        video.style.display = "none";
-        
-        // Use upscaled animated WebP/GIF with cache buster so animation starts at frame 0
-        bakugoImg.src = "bakugo_eyecatch.webp?t=" + Date.now();
-        bakugoImg.style.display = "block";
-        
+        bakugoVideo.style.display = "block";
         overlay.classList.remove("fade-out");
         overlay.classList.add("active");
+        bakugoVideo.currentTime = 0;
 
-        // The Bakugo animation is 46 frames @ 50ms = 2300ms total
-        // At 2150ms (the final explosion charge before loop), trigger card opening
-        // and switch to final impact frame so there is zero jitter
-        bakugoAnimTimer = setTimeout(() => {
-          if (!transitionTriggered) {
-            transitionTriggered = true;
-            bakugoImg.src = "bakugo_impact_frame.jpg";
-            
-            // Open Bakugo's stat card
+        const playPromise = bakugoVideo.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(error => {
+            overlay.classList.remove("active");
             openHeroModal('bakugo');
+          });
+        }
 
-            // Smooth dissolve into the card
+        // Full video is 2.30s. At 2.22s (last frame explosion climax), freeze and flip into card!
+        bakugoVideo.ontimeupdate = function() {
+          if (bakugoVideo.currentTime >= 2.22 && !transitionTriggered) {
+            transitionTriggered = true;
+            bakugoVideo.pause();
+            openHeroModal('bakugo');
             overlay.classList.add("fade-out");
             setTimeout(() => {
               overlay.classList.remove("active");
               overlay.classList.remove("fade-out");
-              bakugoImg.style.display = "none";
+              bakugoVideo.style.display = "none";
             }, 260);
           }
-        }, 2150);
+        };
+
+        bakugoVideo.onended = function() {
+          if (!transitionTriggered) {
+            transitionTriggered = true;
+            openHeroModal('bakugo');
+            overlay.classList.add("fade-out");
+            setTimeout(() => {
+              overlay.classList.remove("active");
+              overlay.classList.remove("fade-out");
+              bakugoVideo.style.display = "none";
+            }, 260);
+          }
+        };
       } else {
         openHeroModal(heroKey);
       }
@@ -1406,10 +1411,6 @@
       if (introDismissed) return;
       introDismissed = true;
       const intro = document.getElementById("introOverlay");
-      const introVid = document.getElementById("introAnimVideo");
-      if (introVid) {
-        try { introVid.pause(); } catch(e) {}
-      }
       if (intro) {
         intro.classList.add("fade-out");
         setTimeout(() => {
@@ -1418,43 +1419,25 @@
       }
     }
 
-    // Play video immediately upon page open and hook ended event
+    // Auto-dismiss after animation plays 1 full cycle (~4.2 seconds for full 40 frames)
     window.addEventListener("DOMContentLoaded", () => {
-      const introVid = document.getElementById("introAnimVideo");
-      if (introVid) {
-        const playPromise = introVid.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(() => {
-            // Autoplay blocked: fallback to showing intro image and timer
-          });
-        }
-        introVid.onended = () => {
-          dismissIntroAnimation();
-        };
-      }
-      // Safety auto-dismiss fallback after 4.5 seconds
       setTimeout(() => {
         dismissIntroAnimation();
-      }, 4500);
+      }, 4200);
     });
 
     document.addEventListener("keydown", function(e) {
       if (e.key === "Escape") {
         dismissIntroAnimation();
         closeHeroModal();
-        if (bakugoAnimTimer) {
-          clearTimeout(bakugoAnimTimer);
-          bakugoAnimTimer = null;
-        }
         const overlay = document.getElementById("eyecatchOverlay");
-        const video = document.getElementById("eyecatchVideo");
-        const bakugoImg = document.getElementById("eyecatchBakugoImg");
+        const dekuVideo = document.getElementById("eyecatchDekuVideo");
+        const bakugoVideo = document.getElementById("eyecatchBakugoVideo");
         if (overlay && overlay.classList.contains("active")) {
-          video.pause();
+          if (dekuVideo) { dekuVideo.pause(); dekuVideo.style.display = "none"; }
+          if (bakugoVideo) { bakugoVideo.pause(); bakugoVideo.style.display = "none"; }
           overlay.classList.remove("active");
           overlay.classList.remove("fade-out");
-          if (bakugoImg) bakugoImg.style.display = "none";
-          if (video) video.style.display = "none";
         }
       }
     });
