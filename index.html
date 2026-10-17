@@ -1191,13 +1191,22 @@
     };
 
     let transitionTriggered = false;
+    let bakugoAnimTimer = null;
 
     function handleHeroClick(heroKey) {
+      const overlay = document.getElementById("eyecatchOverlay");
+      const video = document.getElementById("eyecatchVideo");
+      const bakugoImg = document.getElementById("eyecatchBakugoImg");
+      transitionTriggered = false;
+
+      if (bakugoAnimTimer) {
+        clearTimeout(bakugoAnimTimer);
+        bakugoAnimTimer = null;
+      }
+
       if (heroKey === 'deku') {
-        const overlay = document.getElementById("eyecatchOverlay");
-        const video = document.getElementById("eyecatchVideo");
-        
-        transitionTriggered = false;
+        bakugoImg.style.display = "none";
+        video.style.display = "block";
         overlay.classList.remove("fade-out");
         overlay.classList.add("active");
         video.currentTime = 0;
@@ -1224,6 +1233,7 @@
             setTimeout(() => {
               overlay.classList.remove("active");
               overlay.classList.remove("fade-out");
+              video.style.display = "none";
             }, 250);
           }
         };
@@ -1236,11 +1246,43 @@
             setTimeout(() => {
               overlay.classList.remove("active");
               overlay.classList.remove("fade-out");
+              video.style.display = "none";
             }, 250);
           }
         };
+      } else if (heroKey === 'bakugo') {
+        video.pause();
+        video.style.display = "none";
+        
+        // Use upscaled animated WebP/GIF with cache buster so animation starts at frame 0
+        bakugoImg.src = "bakugo_eyecatch.webp?t=" + Date.now();
+        bakugoImg.style.display = "block";
+        
+        overlay.classList.remove("fade-out");
+        overlay.classList.add("active");
+
+        // The Bakugo animation is 46 frames @ 50ms = 2300ms total
+        // At 2150ms (the final explosion charge before loop), trigger card opening
+        // and switch to final impact frame so there is zero jitter
+        bakugoAnimTimer = setTimeout(() => {
+          if (!transitionTriggered) {
+            transitionTriggered = true;
+            bakugoImg.src = "bakugo_impact_frame.jpg";
+            
+            // Open Bakugo's stat card
+            openHeroModal('bakugo');
+
+            // Smooth dissolve into the card
+            overlay.classList.add("fade-out");
+            setTimeout(() => {
+              overlay.classList.remove("active");
+              overlay.classList.remove("fade-out");
+              bakugoImg.style.display = "none";
+            }, 260);
+          }
+        }, 2150);
       } else {
-        openHeroModal('bakugo');
+        openHeroModal(heroKey);
       }
     }
 
@@ -1341,11 +1383,19 @@
       if (e.key === "Escape") {
         dismissIntroAnimation();
         closeHeroModal();
+        if (bakugoAnimTimer) {
+          clearTimeout(bakugoAnimTimer);
+          bakugoAnimTimer = null;
+        }
         const overlay = document.getElementById("eyecatchOverlay");
         const video = document.getElementById("eyecatchVideo");
+        const bakugoImg = document.getElementById("eyecatchBakugoImg");
         if (overlay && overlay.classList.contains("active")) {
           video.pause();
           overlay.classList.remove("active");
+          overlay.classList.remove("fade-out");
+          if (bakugoImg) bakugoImg.style.display = "none";
+          if (video) video.style.display = "none";
         }
       }
     });
