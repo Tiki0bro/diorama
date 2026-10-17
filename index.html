@@ -16,7 +16,6 @@
 
     body {
       min-height: 100vh;
-      /* Comic manga speed-lines / halftone battle burst background */
       background-color: #0b0f19;
       background-image: 
         radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.12) 0%, transparent 60%),
@@ -327,6 +326,27 @@
       display: inline-block;
     }
 
+    /* Eyecatch Video Transition Overlay */
+    .eyecatch-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 200;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .eyecatch-overlay.active {
+      display: flex;
+    }
+
+    .eyecatch-video {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+    }
+
     /* Modal / Pop-up window for stats */
     .modal-backdrop {
       display: none;
@@ -524,6 +544,13 @@
   </style>
 </head>
 <body>
+  <!-- Eyecatch Video Transition Container -->
+  <div class="eyecatch-overlay" id="eyecatchOverlay">
+    <video class="eyecatch-video" id="eyecatchVideo" playsinline preload="auto">
+      <source src="deku_eyecatch.mp4" type="video/mp4">
+    </video>
+  </div>
+
   <div class="container">
     <!-- Hazard caution top stripe -->
     <div class="mha-hazard-bar"></div>
@@ -553,12 +580,12 @@
         <img src="deku_bakugo.jpg" alt="Bakugo vs Deku" class="base-img" />
         
         <!-- Left Side: Bakugo -->
-        <div class="half-side side-bakugo" onclick="openHeroModal('bakugo')" title="Click to view Bakugo">
+        <div class="half-side side-bakugo" onclick="handleHeroClick('bakugo')" title="Click to view Bakugo">
           <div class="hero-btn btn-bakugo">&#128165; Bakugo</div>
         </div>
 
         <!-- Right Side: Deku -->
-        <div class="half-side side-deku" onclick="openHeroModal('deku')" title="Click to view Deku">
+        <div class="half-side side-deku" onclick="handleHeroClick('deku')" title="Click to view Deku">
           <div class="hero-btn btn-deku">&#9889; Deku</div>
         </div>
       </div>
@@ -645,6 +672,32 @@
       }
     };
 
+    function handleHeroClick(heroKey) {
+      if (heroKey === 'deku') {
+        const overlay = document.getElementById("eyecatchOverlay");
+        const video = document.getElementById("eyecatchVideo");
+        
+        overlay.classList.add("active");
+        video.currentTime = 0;
+        
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(error => {
+            // If autoplay fails, fallback straight to modal
+            overlay.classList.remove("active");
+            openHeroModal('deku');
+          });
+        }
+
+        video.onended = function() {
+          overlay.classList.remove("active");
+          openHeroModal('deku');
+        };
+      } else {
+        openHeroModal('bakugo');
+      }
+    }
+
     function openHeroModal(heroKey) {
       const data = heroData[heroKey];
       if (!data) return;
@@ -684,6 +737,12 @@
     document.addEventListener("keydown", function(e) {
       if (e.key === "Escape") {
         closeHeroModal();
+        const overlay = document.getElementById("eyecatchOverlay");
+        const video = document.getElementById("eyecatchVideo");
+        if (overlay.classList.contains("active")) {
+          video.pause();
+          overlay.classList.remove("active");
+        }
       }
     });
   </script>
