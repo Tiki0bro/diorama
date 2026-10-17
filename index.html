@@ -7,6 +7,7 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <title>Deku & Bakugo - PLUS ULTRA Diorama Showcase</title>
+  <link rel="preload" as="image" href="test_vid_frame0.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Black+Ops+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
@@ -668,25 +669,36 @@
 
     .intro-container {
       position: relative;
+      width: 100%;
+      height: 100%;
       width: 100vw;
-      height: 100vh;
+      height: 100dvh;
       display: flex;
       justify-content: center;
       align-items: center;
       background: #000;
-      padding: 20px;
+      padding: 0;
+      overflow: hidden;
     }
 
     .intro-anim-media {
-      max-width: 90vw;
-      max-height: 85vh;
-      width: auto;
-      height: auto;
-      object-fit: contain;
-      box-shadow: 0 0 50px rgba(245, 158, 11, 0.45);
-      border-radius: 12px;
-      border: 3px solid rgba(250, 204, 21, 0.3);
+      width: 100%;
+      height: 100%;
+      width: 100vw;
+      height: 100dvh;
+      max-width: none;
+      max-height: none;
+      object-fit: cover;
+      object-position: center center;
+      box-shadow: none;
+      border-radius: 0;
+      border: none;
       transition: transform 0.4s ease-out, filter 0.4s ease-out;
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      will-change: transform, filter;
     }
 
     /* Dramatic zoom burst on the palm explosion */
@@ -763,22 +775,18 @@
 
     /* Main Showcase Reveal Boom Animation */
     .container.reveal-boom {
-      animation: mainScreenEntrance 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+      will-change: transform, opacity;
+      animation: mainScreenEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
     }
 
     @keyframes mainScreenEntrance {
       0% {
-        transform: scale(0.88) translateY(30px);
+        transform: scale(0.92) translateY(24px) translateZ(0);
         opacity: 0;
-        filter: brightness(1.8) drop-shadow(0 0 50px #f59e0b);
-      }
-      50% {
-        filter: brightness(1.2) drop-shadow(0 0 30px #f59e0b);
       }
       100% {
-        transform: scale(1) translateY(0);
+        transform: scale(1) translateY(0) translateZ(0);
         opacity: 1;
-        filter: brightness(1) drop-shadow(0 0 0 transparent);
       }
     }
 
@@ -824,7 +832,7 @@
       padding: 20px 16px;
       opacity: 0;
       transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      cursor: pointer;
+      cursor: default;
       overflow: hidden;
     }
 
@@ -1803,7 +1811,7 @@
   <!-- Page Opening Animation Intro Overlay -->
   <div class="intro-overlay" id="introOverlay" onclick="dismissIntroAnimation()">
     <div class="intro-container">
-      <video class="intro-anim-media" id="introAnimVideo" autoplay muted playsinline preload="auto">
+      <video class="intro-anim-media" id="introAnimVideo" autoplay muted playsinline webkit-playsinline x5-playsinline preload="auto" poster="test_vid_frame0.jpg">
         <source src="intro_animation.mp4" type="video/mp4">
       </video>
       <!-- Cinematic Explosion Burst Elements -->
@@ -1814,8 +1822,8 @@
   </div>
 
   <!-- Lilah-Rose Diorama Introduction Overlay -->
-  <div class="lilah-intro-overlay" id="lilahIntroOverlay" onclick="dismissLilahIntro()">
-    <div class="lilah-intro-card" onclick="event.stopPropagation()">
+  <div class="lilah-intro-overlay" id="lilahIntroOverlay">
+    <div class="lilah-intro-card">
       <div class="lilah-intro-top-tag">
         <span>&#9889; U.A. High Student Exhibition</span>
       </div>
@@ -1827,9 +1835,9 @@
         Welcome to the ultimate Deku vs. Bakugo showcase &amp; collectible card archive!
       </p>
       <button class="lilah-intro-btn" onclick="dismissLilahIntro()">
-        Enter Diorama &#9654;
+        View Backstory &#9654;
       </button>
-      <span class="lilah-intro-skip-hint">Tap anywhere or button to begin</span>
+      <span class="lilah-intro-skip-hint">Click button above to view backstory</span>
     </div>
   </div>
 
@@ -1910,7 +1918,7 @@
       </div>
     </div>
 
-    <div class="story-card">
+    <div class="story-card" id="storyCard">
       <div class="story-header-row">
         <div class="story-title">&#9733; The Story of Two Heroes</div>
         <div class="story-file-id">UA-ARCHIVE // CL-1A</div>
@@ -2248,7 +2256,6 @@
     let introDismissed = false;
     let explosionTriggered = false;
     let lilahIntroDismissed = false;
-    let lilahAutoTimer = null;
 
     function showLilahIntro() {
       const lilahOverlay = document.getElementById("lilahIntroOverlay");
@@ -2258,17 +2265,12 @@
         void lilahOverlay.offsetWidth;
         lilahOverlay.classList.add("active");
       }
-
-      // Auto-advance after 5 seconds if user does not click
-      lilahAutoTimer = setTimeout(() => {
-        dismissLilahIntro();
-      }, 5000);
+      // Stays indefinitely until the user clicks "View Backstory"
     }
 
     function dismissLilahIntro() {
       if (lilahIntroDismissed) return;
       lilahIntroDismissed = true;
-      if (lilahAutoTimer) clearTimeout(lilahAutoTimer);
 
       const lilahOverlay = document.getElementById("lilahIntroOverlay");
       const mainContainer = document.querySelector(".container");
@@ -2281,6 +2283,11 @@
         lilahOverlay.classList.add("fade-out");
         setTimeout(() => {
           lilahOverlay.style.display = "none";
+          // Smooth scroll to the backstory card
+          const storyCard = document.getElementById("storyCard");
+          if (storyCard) {
+            storyCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
         }, 450);
       }
     }
@@ -2332,52 +2339,77 @@
     }
 
     // Auto play intro MP4 and sync explosion transition seamlessly at the last frame
-    window.addEventListener("DOMContentLoaded", () => {
+    function initIntroPlayback() {
       const introVid = document.getElementById("introAnimVideo");
-      if (introVid) {
-        introVid.muted = true;
-        introVid.defaultMuted = true;
-        
-        // Start playback
-        const startPlay = () => {
-          introVid.play().catch(e => {
-            console.log("Autoplay waiting for user gesture:", e);
+      if (!introVid) return;
+
+      introVid.muted = true;
+      introVid.defaultMuted = true;
+      
+      const attemptPlay = () => {
+        const playPromise = introVid.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            // If autoplay is delayed or restricted, listen for the first user interaction
+            const resumeAutoplay = () => {
+              introVid.play().catch(() => {});
+              window.removeEventListener("touchstart", resumeAutoplay);
+              window.removeEventListener("click", resumeAutoplay);
+            };
+            window.addEventListener("touchstart", resumeAutoplay, { passive: true, once: true });
+            window.addEventListener("click", resumeAutoplay, { passive: true, once: true });
           });
-        };
-        startPlay();
+        }
+      };
 
-        // Detect apex of Bakugo's palm flare (~3.6s to 3.8s) right before loop ends
-        introVid.addEventListener("timeupdate", () => {
-          if (introVid.currentTime >= 3.65 && !explosionTriggered) {
-            triggerExplosionTransition();
-          }
-        });
+      // Detect apex of Bakugo's palm flare (~3.65s) right before loop ends
+      introVid.addEventListener("timeupdate", () => {
+        if (introVid.currentTime >= 3.65 && !explosionTriggered) {
+          triggerExplosionTransition();
+        }
+      });
 
-        // When video ends, ensure transition completes
-        introVid.addEventListener("ended", () => {
-          if (!explosionTriggered) {
-            triggerExplosionTransition();
-          }
-        });
+      // When video ends, ensure transition completes
+      introVid.addEventListener("ended", () => {
+        if (!explosionTriggered) {
+          triggerExplosionTransition();
+        }
+      });
 
-        // If user touches or clicks anywhere on intro screen, dismiss immediately
-        document.getElementById("introOverlay").addEventListener("click", () => {
+      // If user touches or clicks anywhere on intro screen, dismiss immediately
+      const introOverlay = document.getElementById("introOverlay");
+      if (introOverlay) {
+        introOverlay.addEventListener("click", () => {
           dismissIntroAnimation();
         });
       }
 
-      // Pre-warm eyecatch videos on first user touch/click for zero-latency mobile playback
-      const warmVideos = () => {
-        const dVid = document.getElementById("eyecatchDekuVideo");
-        const bVid = document.getElementById("eyecatchBakugoVideo");
-        if (dVid) { dVid.load(); }
-        if (bVid) { bVid.load(); }
-        window.removeEventListener("touchstart", warmVideos);
-        window.removeEventListener("click", warmVideos);
-      };
-      window.addEventListener("touchstart", warmVideos, { passive: true });
-      window.addEventListener("click", warmVideos, { passive: true });
-    });
+      // Trigger playback as early as possible
+      if (introVid.readyState >= 2) {
+        attemptPlay();
+      } else {
+        introVid.addEventListener("canplay", attemptPlay, { once: true });
+        attemptPlay();
+      }
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initIntroPlayback);
+    } else {
+      initIntroPlayback();
+    }
+
+    // Pre-warm eyecatch videos on first user touch/click for zero-latency mobile playback
+    const warmVideos = () => {
+      const dVid = document.getElementById("eyecatchDekuVideo");
+      const bVid = document.getElementById("eyecatchBakugoVideo");
+      if (dVid) { dVid.load(); }
+      if (bVid) { bVid.load(); }
+      window.removeEventListener("touchstart", warmVideos);
+      window.removeEventListener("click", warmVideos);
+    };
+    window.addEventListener("touchstart", warmVideos, { passive: true });
+    window.addEventListener("click", warmVideos, { passive: true });
 
     document.addEventListener("keydown", function(e) {
       if (e.key === "Escape") {
